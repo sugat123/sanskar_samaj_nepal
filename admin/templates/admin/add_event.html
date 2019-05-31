@@ -1,0 +1,89 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}{{title}} {% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add New Event
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Events</a></li>
+            <li class="breadcrumb-item"><a href="#">Add Event </a></li>
+
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+            {{ form.errors }}
+
+        </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin:add_event' %}" method="post">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <h5>Event Title </h5>
+                                <div class="controls">
+                                    <input type="text" name="title" value="" class="form-control" ></div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Event Date </h5>
+                                <div class="controls">
+                                    <input type="date" name="date" class="form-control"  aria-invalid="false"> <div class="help-block"></div></div>
+                               
+                                    
+                            </div>
+                            <div class="form-group">
+                                <h5>Event Venue </h5>
+                                <div class="controls">
+                                    <input type="text" name="venue" value="" class="form-control" ></div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Event Description </h5>
+                                <div class="controls">
+                                        <textarea name="text" value=""  class="form-control"  placeholder="Event Description" aria-invalid="false"></textarea>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Upload Image </h5>
+                                <div class="controls">
+                                    <input type="file" name="image"  class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info">Add</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

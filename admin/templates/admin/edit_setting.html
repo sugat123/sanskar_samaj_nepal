@@ -1,0 +1,177 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}{{title}} {% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Settings
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Settings</a></li>
+
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+            {{ form.errors }}
+
+        </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin:edit_setting' %}" method="post">
+                            {% csrf_token %}
+                            {% for setting in settings %}
+                            <div class="form-group">
+                                <h5>About Title </h5>
+                                <div class="controls">
+                                    <input type="text" name="about_title" value="{{ setting.about_title }}" class="form-control" ></div>
+                            </div>
+                            <div class="form-group">
+                                <h5>About Description </h5>
+                                <div class="controls">
+                                        <textarea name="about_description" value="{{ setting.about_description }}" id="about_description" class="form-control"  placeholder="About Us Description" aria-invalid="false"></textarea>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>About Page Image </h5>
+                                <div class="controls">
+                                    <input type="file" name="about_image"  class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="mt-20">
+                                    <img src="/media/{{ setting.about_image }}" alt="image" style="width:150px; height:150px;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Facebook URL </h5>
+                                <div class="controls">
+                                    <input type="text" name="facebook_link" value="{{ setting.facebook_link }}" class="form-control" placeholder="Add URL"
+                                       >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Twitter URL </h5>
+                                <div class="controls">
+                                    <input type="text" name="twitter_link" value="{{ setting.twitter_link }}" class="form-control" placeholder="Add URL"
+                                        >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Instagram URL </h5>
+                                <div class="controls">
+                                    <input type="text" name="insta_link" value="{{ setting.insta_link }}" class="form-control" placeholder="Add URL"
+                                        >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Location 
+                                <div class="controls">
+                                    <input type="text" name="location" value="{{ setting.location }}" class="form-control" ></div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Phone Number </h5>
+                                <div class="controls">
+                                    <input type="number" name="phone_number" value="{{ setting.phone_number }}" class="form-control" ></div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Email </h5>
+                                <div class="controls">
+                                    <input type="email" name="email" value="{{ setting.email }}" class="form-control" 
+                                        data-validation-required-message="This field is required">
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Website </h5>
+                                <div class="controls">
+                                    <input type="text" name="website" value="{{ setting.website }}" class="form-control" placeholder="Add URL"
+                                        >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Volunter Text </h5>
+                                <div class="controls">
+                                    <input type="text" name="volunteer_text" value="{{ setting.volunteer_text }}" class="form-control"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Logo </h5>
+                                <div class="controls">
+                                    <input type="file" name="logo" class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="mt-20">
+                                        <img src="/media/{{ setting.logo }}" alt="image" style="width:150px; height:150px;">
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Volunteer Page Image </h5>
+                                <div class="controls">
+                                    <input type="file" name="volunteer_image" class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="mt-20">
+                                        <img src="/media/{{ setting.volunteer_image }}" alt="image" style="width:150px; height:150px;">
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Volunteer Page Backgroung Image </h5>
+                                <div class="controls">
+                                    <input type="file" name="volunteer_bg_image" class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="mt-20">
+                                        <img src="/media/{{ setting.volunteer_bg_image }}" alt="image" style="width:150px; height:150px;">
+                                    </div>
+                            </div>
+
+                            {% endfor %}
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}
