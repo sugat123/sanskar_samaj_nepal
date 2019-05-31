@@ -1,81 +1,77 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} {% endblock %} </title>
+<title>{% block title %}{{title}} {% endblock %} </title>
 
 {% block content %}
 
 <div class="content-wrapper">
-
-    <!-- Main content -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Banners
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
-        <li class="breadcrumb-item"><a href="#">Banners</a></li>
-        <li class="breadcrumb-item active">View</li>
+        <li class="breadcrumb-item"><a href="#">Banner</a></li>
+        <li class="breadcrumb-item active">View/Update</li>
       </ol>
+        {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
     <section class="content">
+
       <div class="row">
-        <div class="col-12">
-            <div class="box box-solid box-primary">
-            <div class="box-header with-border">
-              <h4 class="box-title">View Banners</h4>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
-					<thead>
-						<tr><th>SN</th>
-							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
-							
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td><ol type="1">
-								
-							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							
-							<td></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
-                             
-                              
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
-                             &nbsp; &nbsp; &nbsp; 
-                             
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+        <div class="col-12 col-lg-6">
+          <!-- Profile Image -->
+          <div class="box">
+              {% for banner in banners %}
+                <div class="row">
+                   <div class="col-12 col-lg-12">
+                    <a href="{% url 'admin:edit_banner' banner.id %}">
+    <button class="btn btn-info ">Update
+  </button></a>
+              </div>
+              </div>
+            <div class="box-body box-profile">
 
-						</tr>
-					  
-
-				</table>
-				</div>
+                <h3>Home Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.index_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                 <h3>About Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.about_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                <h3>Events Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.events_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                <h3>Causes Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.causes_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                <h3>Volunteer Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.volunteer_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                <h3>Gallery Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.gallery_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                <h3>Contact Page Banner</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.contact_banner}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
             </div>
-            <!-- /.box-body -->
+
+              {% endfor %}
           </div>
+
           <!-- /.box -->
         </div>
+
+
         <!-- /.col -->
       </div>
       <!-- /.row -->
+
     </section>
-</div>
+    <!-- /.content -->
+  </div>
 
 
 {% endblock %}

@@ -7,64 +7,46 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.template import RequestContext
-from SanskarSamaj.context_processor import volunteer_page2
+# from SanskarSamaj.context_processor import volunteer_page2
 
 
-# def base(request):
-#     nav = Nav.objects.all()
-#     footer = Footer.objects.all()
-#     about = About.objects.all()
-#     volunteer = Volunteer.objects.all().order_by('date')
-#     latest_event2 = Events.objects.order_by('-pk')[0:2]
-#     context = {
-#         'footer':footer,
-#         'about':about,
-#         'volunteer': volunteer,
-#         'nav': nav,
-#         'latest_event2': latest_event2,
-#     }
-#     return render(request, 'SanskarSamaj/base.html', context)
-    
+
+from admin.models import Banner, Causes, Testimonial, Gallery, Event, MoreImage
+
+
 def index(request):
     banner = Banner.objects.all()
     cause = Causes.objects.all()
     testimonial = Testimonial.objects.order_by('-pk')[0:2]
     gallery = Gallery.objects.order_by('-pk')[0:12]
-    events = Events.objects.all().order_by('date')
-    latest_event = Events.objects.order_by('-pk')[0:6]
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
-    # volunteer = Volunteer.objects.all().order_by('date')
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    # if request.method == 'POST':
-    #     form = VForm(request.POST)
-    #     if form.is_valid():
-    #         form.save(commit = False)
-    #         form.save()
-    #         messages.success(request, 'Success')
-    #         return redirect('volunteer_page')
-    #     else:
-    #          messages.error(request, "Sorry try again")
-    # else:
-    #     form = VForm()
+    events = Event.objects.all().order_by('date')
+    latest_event = Event.objects.order_by('-pk')[0:6]
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
+    volunteer = Volunteer.objects.all().order_by('date')
 
-    
+    if request.method == 'POST':
+        form = VForm(request.POST)
+        if form.is_valid():
+            form.save(commit = False)
+            form.save()
+            messages.success(request, 'Success')
+            return redirect('volunteer_page')
+        else:
+             messages.error(request, "Sorry try again")
+    else:
+        form = VForm()
+
+
     context = {
         'banner': banner,
         'cause': cause,
         'testimonial': testimonial,
         'gallery': gallery,
         'events': events,
-        # 'volunteer': volunteer,
-        'nav': nav,
-        # 'form': form,
-        'footer':footer,
-        'about':about,
         'latest_event': latest_event,
         'latest_event2': latest_event2
-        
-        
+
+
     }
     return render(request, 'SanskarSamaj/index.html', context)
 
@@ -72,10 +54,10 @@ def gallery(request):
     gallery = Gallery.objects.filter(active = True).order_by('-date')
     banner = Banner.objects.all()
     # volunteer = Volunteer.objects.all().order_by('-date')
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
+    # nav = Nav.objects.all()
+    # footer = Footer.objects.all()
+    # about = About.objects.all()
+    # latest_event2 = Events.objects.order_by('-pk')[0:2]
 
     page = request.GET.get('page', 1)
     paginator = Paginator(gallery, 9)
@@ -100,15 +82,11 @@ def gallery(request):
     context = {
         'gallery': gallery,
         'banner': banner,
-        # 'volunteer': volunteer,
-        'footer':footer,
-        'about':about,
-        'nav': nav,
-        'latest_event2': latest_event2,
+
         # 'form':'form',
-        
-    
-    
+
+
+
     }
     return render(request, 'SanskarSamaj/gallery.html', context)
 
@@ -117,12 +95,9 @@ def gallery_detail(request, slug):
     # volunteer = Volunteer.objects.all().order_by('-date')
     gallery = Gallery.objects.get(slug=slug)
     banner = Banner.objects.all()
-    
+
     more_images = MoreImage.objects.filter(active=True,image_title_id=gallery)
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
+
     # if request.method == 'POST':
     #     form = VForm(request.POST)
     #     if form.is_valid():
@@ -134,17 +109,14 @@ def gallery_detail(request, slug):
     #          messages.error(request, "Sorry try again")
     # else:
     #     form = VForm()
-    
+
     context = {
         'gallery': gallery,
         'gallerys': gallerys,
         'more_images':more_images,
         'banner': banner,
         # 'volunteer': volunteer,
-        'footer':footer,
-        'about':about,
-        'nav': nav,
-        'latest_event2': latest_event2,
+
         # 'form': form
 
     }
@@ -154,11 +126,8 @@ def causes_page(request):
     cause = Causes.objects.all().order_by('date')
     banner = Banner.objects.all()
     # volunteer = Volunteer.objects.all().order_by('date')
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
-   
+
+
     page = request.GET.get('page', 1)
     paginator = Paginator(cause, 6)
     try:
@@ -179,19 +148,15 @@ def causes_page(request):
     #          messages.error(request, "Sorry try again")
     # else:
     #     form = VForm()
-    
-    
+
+
     context = {
         'cause': cause,
-        # 'volunteer': volunteer,
-        'footer':footer,
-        'about':about,
-        'nav': nav,
-        'latest_event2': latest_event2,
+
         'banner': banner,
         # 'form': form
-        
-        
+
+
     }
     return render(request, 'SanskarSamaj/causes.html', context)
 
@@ -200,10 +165,7 @@ def causes_detail(request, slug):
     causes = Causes.objects.all()
     banner = Banner.objects.all()
     # volunteer = Volunteer.objects.all().order_by('date')
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
+
     # if request.method == 'POST':
     #     form = VForm(request.POST)
     #     if form.is_valid():
@@ -218,11 +180,7 @@ def causes_detail(request, slug):
     context = {
         'cause': cause,
         # 'volunteer': volunteer,
-        'causes': causes,
-        'footer':footer,
-        'about':about,
-        'nav': nav,
-        'latest_event2': latest_event2,
+
         'banner': banner,
         # 'form': form
     }
@@ -235,10 +193,7 @@ def causes_detail(request, slug):
 def volunteer_page(request):
     # volunteer = Volunteer.objects.all()
     banner = Banner.objects.all()
-    nav = Nav.objects.all()
-    footer = Footer.objects.all()
-    about = About.objects.all()
-    latest_event2 = Events.objects.order_by('-pk')[0:2]
+
     # if request.method == 'POST':
     #     form = VForm(request.POST)
     #     if form.is_valid():
@@ -253,10 +208,7 @@ def volunteer_page(request):
     context = {
         # 'volunteer': volunteer,
         # 'form':form,
-        'footer':footer,
-        'about':about,
-        'nav': nav,
-        'latest_event2': latest_event2,
+
         'banner': banner,
     }
     return render(request, 'SanskarSamaj/volunteer.html', context)
@@ -277,7 +229,7 @@ def contact_page(request):
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = "{0} with email address {1} has sent you new message \n\n{2}".format(name, email, form.cleaned_data['message'])
-            
+
             form.save(commit = False)
             try:
                 send_mail(name, message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', ['sugatp454@gmail.com'])
@@ -300,7 +252,7 @@ def contact_page(request):
         form2 = VForm()
 
 
-    
+
     context = {
         'contact': contact,
         'volunteer': volunteer,
@@ -321,7 +273,7 @@ def about_page(request):
     testimonial = Testimonial.objects.order_by('-pk')[0:2]
     nav = Nav.objects.all()
     footer = Footer.objects.all()
-    
+
     latest_event2 = Events.objects.order_by('-pk')[0:2]
     # if request.method == 'POST':
     #     form = VForm(request.POST)
@@ -344,12 +296,12 @@ def about_page(request):
         'latest_event2': latest_event2,
         # 'form': form
     }
-      
-      
+
+
     return render(request, 'SanskarSamaj/about.html', context)
-    
+
     # return render_to_response('SanskarSamaj/about.html', context, context_instance=RequestContext(request))
-    
+
 
 def events_page(request):
     event = Events.objects.all().order_by('-date')
@@ -367,7 +319,7 @@ def events_page(request):
         event = paginator.page(1)
     except EmptyPage:
         event = paginator.page(paginator.num_pages)
-    
+
     # if request.method == 'POST':
     #     form = VForm(request.POST)
     #     if form.is_valid():
@@ -388,7 +340,7 @@ def events_page(request):
         'latest_event2': latest_event2,
         'banner': banner,
         # 'form': form
-        
+
     }
     return render(request, 'SanskarSamaj/events.html', context)
 
@@ -425,13 +377,13 @@ def events_detail(request, slug):
     }
     return render(request, 'SanskarSamaj/events_detail.html', context)
 
-     
+
 # def handler404(request):
 #     return render(request, 'SanskarSamaj/404.html', status = 404)
 
 # def handler500(request):
 #     return render(request, 'SanskarSamaj/500.html', status = 500)
-     
+
 
 
 

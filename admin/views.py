@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from admin.models import *
 
 from admin.forms import *
@@ -37,27 +37,81 @@ def dashboard(request):
     return render(request, 'admin/dashboard.html', {})
 
 def view_setting(request):
-    
-    return render(request, 'admin/view_setting.html', {})
+    details = Detail.objects.all()
+    settings = SectionComponent.objects.all()
+    return render(request, 'admin/view_setting.html', {'settings':settings,'details':details})
 
-def edit_setting(request):
-    settings = Setting.objects.all().order_by('-date')
+def edit_setting(request,id):
+    setting = get_object_or_404(SectionComponent, id=id)
     if request.method == 'POST':
-        form = SettingForm(request.POST or None)
+        form = SectionComponentForm(request.POST or None,request.FILES or None, instance=setting)
         if form.is_valid():
             setting = form.save(commit=False)
             setting.save()
-            messages.success(request,' Settings updated.')
-            return redirect('admin:edit_setting')
+            messages.success(request, ' Updated.')
+            return redirect('admin:view_setting')
+
+    return render(request, 'admin/edit_setting.html', {'setting': setting})
+
+def edit_detail(request, id):
+    detail = get_object_or_404(Detail, id=id)
+    if request.method == 'POST':
+        form = DetailForm(request.POST or None,instance=detail)
+        if form.is_valid():
+            detail = form.save(commit=False)
+            detail.save()
+            messages.success(request, 'Updated.')
+            return redirect('admin:view_setting')
+
+    return render(request, 'admin/edit_detail.html', {'detail': detail})
+def add_setting(request):
+    if request.method == 'POST':
+        form = SectionComponentForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            setting = form.save(commit=False)
+            setting.save()
+
+            return redirect('admin:view_setting')
     else:
-        form = SettingForm()
-    return render(request, 'admin/edit_setting.html', {'form':form, 'settings':settings})
+        form = SectionComponentForm()
+    return render(request, 'admin/add_setting.html', {'form':form})
 
+def add_detail(request):
+
+    if request.method == 'POST':
+        form = DetailForm(request.POST or None)
+        if form.is_valid():
+            setting = form.save(commit=False)
+            setting.save()
+
+            return redirect('admin:view_setting')
+    else:
+        form = DetailForm()
+    return render(request, 'admin/add_detail.html', {'form':form})
+
+def add_banner(request):
+    if request.method == "POST":
+        form = AddBannerForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save(commit=False)
+            form.save()
+            return redirect('admin:view_banner')
+    else:
+        form = AddBannerForm()
+    return render(request,'admin/add_banner.html',{'form':form})
 def view_banner(request):
-    return render(request, 'admin/view_banner.html', {})
+    banners = Banner.objects.all()
+    return render(request, 'admin/view_banner.html', {'banners':banners})
 
-def edit_banner(request):
-    return render(request, 'admin/edit_banner.html', {})
+def edit_banner(request,id):
+    banner = get_object_or_404(Banner,id=id)
+    if request.method == "POST":
+        form = AddBannerForm(request.POST or None, request.FILES or None,instance=banner)
+        if form.is_valid():
+            form.save(commit=False)
+            form.save()
+            return redirect('admin:view_banner')
+    return render(request, 'admin/edit_banner.html', {'banner': banner})
 
 def view_event(request):
     events = Event.objects.all().order_by('-auto_date')

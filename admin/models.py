@@ -1,29 +1,32 @@
-
+import datetime
 
 from django.db import models
 from autoslug import AutoSlugField
 
 
 
-class Setting(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
-    logo = models.ImageField(upload_to='setting',default='default.png', blank=True, null=True)
-    volunteer_image = models.ImageField(upload_to='setting', default='default.png', blank=True, null=True)
-    volunteer_bg_image = models.ImageField(upload_to='setting', default='default.png', blank=True, null=True)
+
+class SectionComponent(models.Model):
+    logo = models.ImageField(upload_to='setting', default='default.png')
+    volunteer_image = models.ImageField(upload_to='setting', default='default.png')
+    volunteer_bg_image = models.ImageField(upload_to='setting', default='default.png')
     volunteer_text = models.TextField(blank=True, null=True)
-    about_title = models.CharField(max_length=100, blank=True, null=True)
+    about_title = models.CharField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
+    about_image = models.ImageField(upload_to='about', default='default.png')
+    about_description = models.TextField()
 
-    about_image = models.ImageField(upload_to='setting', default='default.png', blank=True, null=True)
-    about_description = models.TextField(blank=True, null=True)
-    facebook_link = models.URLField(default='https://www.facebook.com', blank=True, null=True)
-    twitter_link = models.URLField(default='https://www.twitter.com', blank=True, null=True)
-    insta_link = models.URLField(default='https://www.instagram.com', blank=True, null=True)
-    location = models.CharField(max_length=100, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
+
+class Detail(models.Model):
+    facebook_link = models.URLField(default='https://www.facebook.com')
+    twitter_link = models.URLField(default='https://www.twitter.com')
+    insta_link = models.URLField(default='https://www.instagram.com')
+    location = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField()
+    website = models.URLField(default='https://www.yoursite.com')
     map_link = models.URLField(blank=True, null=True)
-
+    date = models.DateTimeField(auto_now_add=True)
 
 
 class Banner(models.Model):
@@ -44,11 +47,13 @@ class Causes(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     slug = AutoSlugField(unique_with='id', populate_from='title')
     description = models.TextField(blank=True, null=True)
-    cause_image = models.ImageField(upload_to='cause', default='default.png', blank=True, null=True)
+    cause_image = models.ImageField(upload_to='cause', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    views = models.IntegerField(default=0)
     featured = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.title
@@ -99,10 +104,11 @@ class MoreImage(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=datetime.datetime.today)
     text = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='events', default='default.png', blank=True, null=True)
+    image = models.ImageField(upload_to='events', default='default.png')
     venue = models.CharField(max_length=60, blank=True, null=True)
+    views = models.IntegerField(default=0)
     auto_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
@@ -117,14 +123,11 @@ class VolunteerForm(models.Model):
 
 
 
-
-
 class ContactForm(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField()
     subject = models.CharField(max_length=60)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-
 
 
