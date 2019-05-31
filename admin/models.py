@@ -4,8 +4,6 @@ from django.db import models
 from autoslug import AutoSlugField
 
 
-
-
 class SectionComponent(models.Model):
     logo = models.ImageField(upload_to='setting', default='default.png')
     volunteer_image = models.ImageField(upload_to='setting', default='default.png')
@@ -41,8 +39,6 @@ class Banner(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class Cause(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     slug = AutoSlugField(unique_with='id', populate_from='title')
@@ -54,18 +50,15 @@ class Cause(models.Model):
     featured = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.title
-
-
 
 
 class Testimonial(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     position = models.CharField(max_length=60, blank=True, null=True)
-    review = models.TextField(  blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='testimonial', default='default.png', blank=True, null=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
@@ -74,7 +67,6 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class Gallery(models.Model):
@@ -88,8 +80,6 @@ class Gallery(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class MoreImage(models.Model):
     image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='moreimage', default='default.png')
@@ -99,16 +89,10 @@ class MoreImage(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
-<<<<<<< HEAD
-    date = models.DateTimeField(blank=True, null=True)
-=======
     date = models.DateTimeField(default=datetime.datetime.today)
->>>>>>> 5876d6d9c416c6563d6cae6aa661b3c3f77334be
     text = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='events', default='default.png')
     venue = models.CharField(max_length=60, blank=True, null=True)
@@ -126,12 +110,9 @@ class VolunteerForm(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 
-
 class ContactForm(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField()
     subject = models.CharField(max_length=60)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-
-
