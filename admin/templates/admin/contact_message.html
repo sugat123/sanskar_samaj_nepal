@@ -35,35 +35,31 @@
 					<thead>
 						<tr><th>SN</th>
 							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
+							<th>Email</th>
+							<th>Subject</th>
+							<th>Message</th>
 							
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-					
+					{% for contact in contacts %}
 						<tr>
 							<td><ol type="1">
-								
+								{{ forloop.counter }}
 							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>{{ contact.name }}</td>
+							<td>{{ contact.email }}</td>
+							<td>{{ contact.subject }}</td>
 							
-							<td></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
-                             
-                              
-                               <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
-                            &nbsp; &nbsp; &nbsp; 
+							<td>{{ contact.message }}</td>
+                            <td> 
                             
                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  
-
+            {% endfor %}
 				</table>
 				</div>
             </div>

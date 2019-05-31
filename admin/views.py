@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from admin.models import *
-
+from SanskarSamaj.views import contact_page
 from admin.forms import *
 
 
@@ -65,7 +65,7 @@ def view_event(request):
 
 def add_event(request):
     if request.method == 'POST':
-        form = AddEventForm(request.POST or None)
+        form = AddEventForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             event = form.save(commit=False)
             event.save()
@@ -75,13 +75,39 @@ def add_event(request):
         form = AddEventForm()
     return render(request, 'admin/add_event.html', {'form':form})
 
+def edit_event(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+    if request.method == 'POST':
+
+        form = AddEventForm(request.POST or None, instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.save()
+            messages.success(request, ' Event  updated.')
+            return redirect('admin:view_event')
+    else:
+        form = AddEventForm()
+
+    return render(request, 'admin/edit_event.html', {'event': event, 'form':form})
+
+def delete_event(request,slug):
+    event = get_object_or_404(Event, slug=slug)
+    event.delete()
+    messages.success(request,'{} Event deleted'.format(event.title))
+    return redirect('admin:view_event')
+
+def detail_event(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+    
+    return render(request, 'admin/detail_event.html', {'event': event})
+
 def view_cause(request):
-    causes = Cause.objects.all.order_by('-date')
+    causes = Cause.objects.all().order_by('-date')
     return render(request, 'admin/view_cause.html', {'causes':causes})
 
 def add_cause(request):
     if request.method == 'POST':
-        form = AddEventForm(request.POST or None)
+        form = AddCauseForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             cause = form.save(commit=False)
             cause.save()
@@ -90,23 +116,133 @@ def add_cause(request):
     else:
         form = AddCauseForm()
     return render(request, 'admin/add_cause.html', {'form':form})
+    
+def edit_cause(request,slug):
+    cause = get_object_or_404(Cause,slug=slug)
+    if request.method == 'POST':
+
+        form = AddCauseForm(request.POST or None, instance=cause)
+        if form.is_valid():
+            cause = form.save(commit=False)
+            cause.save()
+            messages.success(request, ' Cause  updated.')
+            return redirect('admin:view_cause')
+    else:
+        form = AddCauseForm()
+
+    return render(request, 'admin/edit_cause.html', {'cause': cause, 'form':form})
+
+def delete_cause(request,slug):
+    cause = get_object_or_404(Cause, slug=slug)
+    cause.delete()
+    messages.success(request,'{} Cause deleted'.format(cause.title))
+    return redirect('admin:view_cause')
+
+def detail_cause(request, slug):
+    cause = get_object_or_404(Cause, slug=slug)
+    
+    return render(request, 'admin/detail_cause.html', {'cause': cause})
 
 def view_gallery(request):
-    return render(request, 'admin/view_gallery.html', {})
+    gallerys= Gallery.objects.all().order_by('-date')
+    return render(request, 'admin/view_gallery.html', {'gallerys':gallerys})
 
 def add_gallery(request):
-    return render(request, 'admin/add_gallery.html', {})
+    if request.method == 'POST':
+        form = AddGalleryForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            gallery = form.save(commit=False)
+            gallery = form.save(commit=False)
+            gallery.save()
+            messages.success(request,' Image added.')
+            return redirect('admin:add_gallery')
+    else:
+        form = AddGalleryForm()
+    return render(request, 'admin/add_gallery.html', {'form':form})
+
+def edit_gallery(request,slug):
+    gallery = get_object_or_404(Gallery,slug=slug)
+    if request.method == 'POST':
+
+        form = AddGalleryForm(request.POST or None, instance=cause)
+        if form.is_valid():
+            gallery = form.save(commit=False)
+            gallery.save()
+            messages.success(request, ' Gallery  updated.')
+            return redirect('admin:view_gallery')
+    else:
+        form = AddGalleryForm()
+
+    return render(request, 'admin/edit_gallery.html', {'gallery': gallery, 'form':form})
+
+def delete_gallery(request,slug):
+    gallery = get_object_or_404(Gallery, slug=slug)
+    gallery.delete()
+    messages.success(request,'{} image deleted'.format(gallery.image_title))
+    return redirect('admin:view_gallery')
+
+def detail_gallery(request, slug):
+    gallery = get_object_or_404(Gallery, slug=slug)
+    
+    return render(request, 'admin/detail_gallery.html', {'gallery': gallery})
 
 def view_testimonial(request):
-    return render(request, 'admin/view_testimonial.html', {})
+    testimonials = Testimonial.objects.all().order_by('-date')
+    return render(request, 'admin/view_testimonial.html', {'testimonials':testimonials})
 
 def add_testimonial(request):
-    return render(request, 'admin/add_testimonial.html', {})
+    if request.method == 'POST':
+        form = AddTestimonialForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            testimonial = form.save(commit=False)
+            testimonial = form.save(commit=False)
+            testimonial.save()
+            messages.success(request,' Testimonial added.')
+            return redirect('admin:add_testimonial')
+    else:
+        form = AddTestimonialForm()
+    return render(request, 'admin/add_testimonial.html', {'form':form})
+
+def edit_testimonial(request,slug):
+    testimonial = get_object_or_404(Testimonial,slug=slug)
+    if request.method == 'POST':
+
+        form = AddTestimonialForm(request.POST or None, instance=testimonial)
+        if form.is_valid():
+            testimonial = form.save(commit=False)
+            testimonial.save()
+            messages.success(request, ' Testimonial  updated.')
+            return redirect('admin:view_testimonial')
+    else:
+        form = AddTestimonialForm()
+
+    return render(request, 'admin/edit_testimonial.html', {'testimonial': testimonial, 'form':form})
+
+def delete_testimonial(request,slug):
+    testimonial = get_object_or_404(Testimonial, slug=slug)
+    testimonial.delete()
+    messages.success(request,'{}\'s testimonial deleted'.format(testimonial.title))
+    return redirect('admin:view_testimonial')
+
+def detail_testimonial(request, slug):
+    testimonial = get_object_or_404(Testimonial, slug=slug)
+    
+    return render(request, 'admin/detail_testimonial.html', {'testimonial': testimonial})
 
 def contact_message(request):
-    return render(request, 'admin/contact_message.html', {})
+    contacts = ContactForm.objects.all().order_by('-date')
+    return render(request, 'admin/contact_message.html', {'contacts':contacts})
 
 def volunteer_message(request):
-    return render(request, 'admin/volunteer_message.html', {})
+    volunteers = VolunteerForm.objects.all().order_by('-date')
+    return render(request, 'admin/volunteer_message.html', {'volunteers':volunteers})
+
+
+
+       
+
+
+    
+    
 
 

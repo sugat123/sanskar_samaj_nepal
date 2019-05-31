@@ -194,23 +194,8 @@ class ContactPage(models.Model):
         verbose_name_plural = 'Contact_Section'
 
 
-class VolunteerForm(models.Model):
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    message = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = 'Message from Volunteers Form'
 
 
-class ContactForm(models.Model):
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    subject = models.CharField(max_length=60)
-    message = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        verbose_name_plural = 'Message from Contacts Form'
+
 

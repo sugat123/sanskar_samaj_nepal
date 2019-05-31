@@ -40,7 +40,7 @@ class Banner(models.Model):
 
 
 
-class Causes(models.Model):
+class Cause(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     slug = AutoSlugField(unique_with='id', populate_from='title')
     description = models.TextField(blank=True, null=True)
@@ -57,11 +57,11 @@ class Causes(models.Model):
 
 
 class Testimonial(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    position = models.CharField(max_length=60)
-    review = models.TextField()
-    image = models.ImageField(upload_to='testimonial', default='default.png')
+    position = models.CharField(max_length=60, blank=True, null=True)
+    review = models.TextField(  blank=True, null=True)
+    image = models.ImageField(upload_to='testimonial', default='default.png', blank=True, null=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
@@ -73,8 +73,8 @@ class Testimonial(models.Model):
 
 
 class Gallery(models.Model):
-    image_title = models.CharField(max_length=100)
-    image_date = models.DateField()
+    image_title = models.CharField(max_length=100, blank=True, null=True)
+    image_date = models.DateField(blank=True, null=True)
     image = models.ImageField(upload_to='gallery', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(unique_with='id', populate_from='image_title')
@@ -99,7 +99,7 @@ class MoreImage(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
-    date = models.DateTimeField()
+    date = models.DateTimeField(blank=True, null=True)
     text = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='events', default='default.png', blank=True, null=True)
     venue = models.CharField(max_length=60, blank=True, null=True)

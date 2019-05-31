@@ -34,10 +34,10 @@
 				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
-							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
+							<th>Title</th>
+							<th>Date</th>
+							<th>Image</th>
+							
 							
 							<th>Actions</th>
 						</tr>
@@ -45,25 +45,25 @@
 					<tbody>
 					
 						<tr>
+              {% for gallery in gallerys %}
 							<td><ol type="1">
-								
+								{{ forloop.counter }}
 							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>{{ gallery.image_title }}</td>
+							<td>{{ gallery.image_date }}</td>
+							<td><img src="/media/{{ gallery.image }}" alt="image" style="width:120px; height:120px;"></td>
 							
-							<td></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+							
+                            <td> <a href="{% url 'admin:detail_gallery' gallery.slug %}" data-toggle="tooltip"  title="View More Images"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
-                             &nbsp; &nbsp; &nbsp; 
+                                
                              
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_gallery' gallery.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  
-
+{% endfor %}
 				</table>
 				</div>
             </div>

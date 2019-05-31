@@ -8,6 +8,8 @@ from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from SanskarSamaj.context_processor import volunteer_page2
+from admin.models import ContactForm, VolunteerForm
+
 
 
 # def base(request):

@@ -52,14 +52,14 @@
 							<td>{{ event.date }}</td>
 							<td> {{ event.venue }}</td>
 							
-							<td><img src="/media/{{ event.image }}" alt="image" style="width:120px; height:120px;"></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+							<td><img src="/media/{{ event.image }}" alt="image" style="width:120px; height:80px;"></td>
+                            <td> <a href="{% url 'admin:detail_event' event.slug %}" data-toggle="tooltip"  title="View Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
+                                <a href="{% url 'admin:edit_event' event.slug %}" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_event' event.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  

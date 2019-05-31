@@ -1,0 +1,84 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}{{title}} {% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add New Cause
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Causes</a></li>
+            <li class="breadcrumb-item"><a href="#">Add Cause </a></li>
+
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+            {{ form.errors }}
+
+        </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin:edit_cause' cause.slug %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <h5>Cause Title </h5>
+                                <div class="controls">
+                                    <input type="text" name="title" value="{{ cause.title }}" class="form-control" ></div>
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <h5>Cause Description </h5>
+                                <div class="controls">
+                                        <textarea name="description" value=""  class="form-control"  placeholder="Event Description" aria-invalid="false">
+                                                {{ cause.description }}
+                                        </textarea>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Upload Image </h5>
+                                <div class="controls">
+                                    <input type="file" name="cause_image"   class="form-control" >
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="mt-20">
+                                        <img src="/media/{{ cause.cause_image }}" alt="image" style="width:150px; height:150px;">
+                                    </div>
+                                
+                            </div>
+
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

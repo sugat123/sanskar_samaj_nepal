@@ -1,0 +1,47 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %} {% endblock %} </title>
+
+{% block content %}
+
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Cause Detail
+      </h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
+        <li class="breadcrumb-item"><a href="#">Cause</a></li>
+        <li class="breadcrumb-item active">Detail</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+            <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        
+                    </div>
+        
+                    <div class="col-md-12 col-lg-8" >
+                            <div class="card">
+                              <div class="card-body">
+                                <h4 class="card-title">{{ cause.title }}</h4>
+                                <p class="card-text">{{ cause.description }}</p>
+                              </div>
+                              <img class="card-img-top" src="/media/{{ cause.cause_image }}" alt="Card image cap">
+                              
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-2"></div>
+                    </div>
+     
+    </section>
+</div>
+
+
+{% endblock %}

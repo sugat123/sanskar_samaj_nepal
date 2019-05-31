@@ -35,9 +35,9 @@
 					<thead>
 						<tr><th>SN</th>
 							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
+							<th>Position</th>
+							<th>Image</th>
+							
 							
 							<th>Actions</th>
 						</tr>
@@ -45,24 +45,25 @@
 					<tbody>
 					
 						<tr>
+              {% for testimonial in testimonials %}
 							<td><ol type="1">
-								
+								{{ forloop.counter }}
 							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>{{ testimonial.title }}</td>
+							<td>{{ testimonial.position }}</td>
+						
 							
-							<td></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+							<td><img src="/media/{{ testimonial.image }}" alt="image" style="width:120px; height:120px;"></td>
+                            <td> <a href="{% url 'admin:detail_testimonial' testimonial.slug %}" data-toggle="tooltip"  title="View Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
+                                <a href="{% url 'admin:edit_testimonial' testimonial.slug %}" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_testimonial' testimonial.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
 
 						</tr>
-					  
+					  {% endfor %}
 
 				</table>
 				</div>

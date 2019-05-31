@@ -19,5 +19,16 @@ class AddEventForm(forms.ModelForm):
 
 class AddCauseForm(forms.ModelForm):
     class Meta:
-        model = Event
-        exclude = ['date']
+        model = Cause
+        fields = '__all__'
+
+class AddTestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = '__all__'
+
+class AddGalleryForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
+        fields = '__all__'
+

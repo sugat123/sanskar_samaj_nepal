@@ -35,24 +35,24 @@
 					<thead>
 						<tr><th>SN</th>
 							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
+							<th>Email</th>
+							<th>Message</th>
+						
 							
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-					
+					{% for volunteer in volunteers %}
 						<tr>
 							<td><ol type="1">
-								
-							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
+								{{ forloop.counter }}
+							</ol>{{ volunteer.name }}</td>
+							<td>{{ volunteer.email }}</td>
+							<td>{{ volunteer.message }}</td>
+						
 							
-							<td></td>
+						
                             <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
@@ -63,7 +63,7 @@
 
 						</tr>
 					  
-
+            {% endfor %}
 				</table>
 				</div>
             </div>
