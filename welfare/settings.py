@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-'admin',
+    'admin',
     'SanskarSamaj',
     'bootstrap4',
 ]
@@ -66,7 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'SanskarSamaj.context_processor.volunteer_page2'
+                # 'SanskarSamaj.context_processor.volunteer_page2'
             ],
         },
     },

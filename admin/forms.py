@@ -7,10 +7,21 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
-class SettingForm(forms.ModelForm):
+class SectionComponentForm(forms.ModelForm):
     class Meta:
-        model = Setting
+        model = SectionComponent
         fields = '__all__'
+
+class DetailForm(forms.ModelForm):
+    class Meta:
+        model = Detail
+        fields = '__all__'
+
+class AddBannerForm(forms.ModelForm):
+    class Meta:
+        model = Banner
+        fields = '__all__'
+
 
 class AddEventForm(forms.ModelForm):
     class Meta:

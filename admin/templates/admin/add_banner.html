@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %}{{title}}{% endblock %}</title>
+<title>{% block title %}Add {% endblock %}</title>
 <!-- Content Wrapper. Contains page content -->
 {% block content %}
 <div class="content-wrapper">
@@ -11,8 +11,8 @@
             Settings
         </h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Banner</a></li>
-            <li class="breadcrumb-item"><a href="#">Update</a></li>
+            <li class="breadcrumb-item"><a href="#">Settings</a></li>
+
 
         </ol>
         {% bootstrap_messages %}
@@ -33,7 +33,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col">
-                        <form action="{% url 'admin:edit_banner' banner.id %}" method="post" enctype="multipart/form-data">
+                        <form action="{% url 'admin:add_banner' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             <div class="form-group">
@@ -41,9 +41,6 @@
                                 <div class="controls">
                                     <input type="file" name="index_banner" class="form-control" >
                                     <div class="help-block"></div>
-                                </div>
-                                <div class="mt-20">
-                                    <img src="/media/{{ banner.index_banner }}" alt="image" style="width:150px; height:150px;">
                                 </div>
 
                             </div>
@@ -53,9 +50,6 @@
                                     <input type="file" name="causes_banner" class="form-control" >
                                     <div class="help-block"></div>
                                 </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.causes_banner }}" alt="image" style="width:150px; height:150px;">
-                                </div>
 
                             </div>
                                   <div class="form-group">
@@ -63,9 +57,6 @@
                                 <div class="controls">
                                     <input type="file" name="events_banner" class="form-control" >
                                     <div class="help-block"></div>
-                                </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.events_banner }}" alt="image" style="width:150px; height:150px;">
                                 </div>
 
                             </div>
@@ -75,9 +66,6 @@
                                     <input type="file" name="about_banner" class="form-control" >
                                     <div class="help-block"></div>
                                 </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.about_banner }}" alt="image" style="width:150px; height:150px;">
-                                </div>
 
                             </div>
                                   <div class="form-group">
@@ -85,9 +73,6 @@
                                 <div class="controls">
                                     <input type="file" name="contact_banner" class="form-control" >
                                     <div class="help-block"></div>
-                                </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.contact_banner }}" alt="image" style="width:150px; height:150px;">
                                 </div>
 
                             </div>
@@ -97,9 +82,6 @@
                                     <input type="file" name="volunteer_banner" class="form-control" >
                                     <div class="help-block"></div>
                                 </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.volunteer_banner }}" alt="image" style="width:150px; height:150px;">
-                                </div>
 
                             </div>
                                   <div class="form-group">
@@ -108,15 +90,12 @@
                                     <input type="file" name="gallery_banner" class="form-control" >
                                     <div class="help-block"></div>
                                 </div>
-                                      <div class="mt-20">
-                                    <img src="/media/{{ banner.gallery_banner }}" alt="image" style="width:150px; height:150px;">
-                                </div>
 
                             </div>
 
 
                             <div class="text-xs-right">
-                                <button type="submit" class="btn btn-info">Update</button>
+                                <button type="submit" class="btn btn-info">Add</button>
                             </div>
                         </form>
 

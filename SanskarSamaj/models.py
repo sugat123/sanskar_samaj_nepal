@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.db import models
 from autoslug import AutoSlugField
 from django.utils.html import format_html
@@ -199,3 +200,5 @@ class ContactPage(models.Model):
 
 
 
+=======
+>>>>>>> 5876d6d9c416c6563d6cae6aa661b3c3f77334be

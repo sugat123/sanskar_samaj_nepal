@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %}{{title}} {% endblock %}</title>
+<title>{% block title %}Add {% endblock %}</title>
 <!-- Content Wrapper. Contains page content -->
 {% block content %}
 <div class="content-wrapper">
@@ -12,9 +12,9 @@
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Settings</a></li>
-            <li class="breadcrumb-item"><a href="#">Update</a></li>
-        </ol>
 
+        </ol>
+        {% bootstrap_messages %}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -33,78 +33,86 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col">
-                        <form action="{% url 'admin:edit_setting' setting.id %}" method="post" enctype="multipart/form-data">
+                        <form action="{% url 'admin:add_detail' %}" method="post">
                             {% csrf_token %}
 
                             <div class="form-group">
-                                <h5>About Section Title </h5>
+                                <h5>Facebook URL </h5>
                                 <div class="controls">
-                                    <input type="text" name="about_title" value="{{ setting.about_title }}" required class="form-control" ></div>
-                            </div>
-                            <div class="form-group">
-                                <h5>About Section Description </h5>
-                                <div class="controls">
-                                        <textarea name="about_description" id="about_description" class="form-control" required placeholder="About Us Description" aria-invalid="false">
-                                            {{ setting.about_description }}
-                                        </textarea>
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <h5>About Page Image </h5>
-                                <div class="controls">
-                                    <input type="file" name="about_image"  class="form-control" >
+                                    <input type="text" name="facebook_link" value="https://www.facebook.com" class="form-control"
+                                       >
+                                    
                                     <div class="help-block"></div>
                                 </div>
-                                <div class="mt-20">
-                                    <img src="/media/{{ setting.about_image }}" alt="image" style="width:150px; height:150px;">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <h5>Description for Volunteer Section in home page: </h5>
-                                <div class="controls">
-                                    <input type="text" name="volunteer_text" value="{{ setting.volunteer_text }}" class="form-control"></div>
                             </div>
 
                             <div class="form-group">
-                                <h5>Logo </h5>
+                                <h5>Twitter URL </h5>
                                 <div class="controls">
-                                    <input type="file" name="logo" class="form-control" >
+                                    <input type="text" name="twitter_link" value="https://www.twitter.com" class="form-control"
+                                        >
+                                    
                                     <div class="help-block"></div>
                                 </div>
-                                <div class="mt-20">
-                                        <img src="/media/{{ setting.logo }}" alt="image" style="width:150px; height:150px;">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Instagram URL </h5>
+                                <div class="controls">
+                                    <input type="text" name="insta_link" value="https://www.instagram.com" class="form-control"
+                                        >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <h5>Volunteer Page Image </h5>
+                                <h5>Location </h5>
                                 <div class="controls">
-                                    <input type="file" name="volunteer_image" class="form-control" >
-                                    <div class="help-block"></div>
+                                    <input type="text" name="location"  class="form-control" required >
                                 </div>
-                                <div class="mt-20">
-                                        <img src="/media/{{ setting.volunteer_image }}" alt="image" style="width:150px; height:150px;">
-                                    </div>
                             </div>
 
                             <div class="form-group">
-                                <h5>Volunteer Page Background Image </h5>
+                                <h5>Phone Number </h5>
                                 <div class="controls">
-                                    <input type="file" name="volunteer_bg_image" class="form-control" >
+                                    <input type="number" name="phone_number"  class="form-control" required></div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Email </h5>
+                                <div class="controls">
+                                    <input type="email" name="email"  class="form-control" required
+                                        data-validation-required-message="This field is required">
                                     <div class="help-block"></div>
                                 </div>
-                                <div class="mt-20">
-                                        <img src="/media/{{ setting.volunteer_bg_image }}" alt="image" style="width:150px; height:150px;">
-                                    </div>
                             </div>
+                            <div class="form-group">
+                                <h5>Website </h5>
+                                <div class="controls">
+                                    <input type="text" name="website" value="https://www.yoursite.com" class="form-control" >
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                              <div class="form-group">
+                                <h5>Map Link </h5>
+                                <div class="controls">
+                                    <input type="text" name="map_link" value="https://maps.google.com/maps?q=online%20zeal&t=&z=13&ie=UTF8&iwloc=&output=embed" class="form-control" >
+
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+
+
+
 
 
                             <div class="text-xs-right">
                                 <button type="submit" class="btn btn-info">Update</button>
                             </div>
                         </form>
+
 
                     </div>
                     <!-- /.col -->

@@ -6,76 +6,113 @@
 {% block content %}
 
 <div class="content-wrapper">
-
-    <!-- Main content -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Settings
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Settings</a></li>
-        <li class="breadcrumb-item active">View</li>
+        <li class="breadcrumb-item active">View/Edit</li>
       </ol>
+        {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
     <section class="content">
+
       <div class="row">
-        <div class="col-12">
-            <div class="box box-solid box-primary">
-            <div class="box-header with-border">
-              <h4 class="box-title">View Settings</h4>
+        <div class="col-12 col-lg-6">
+          <!-- Profile Image -->
+          <div class="box">
+              {% for section in settings %}
+                <div class="row">
+                   <div class="col-12 col-lg-6">
+                    <a href="{% url 'admin:edit_setting' section.id %}">
+    <button class="btn btn-info ">Update
+  </button></a>
+              </div>
+              </div>
+            <div class="box-body box-profile">
+                 <h3>Logo</h3>
+                  <img src="/media/{{section.logo}}" alt="logo">
+                <h3>About Section Image</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{section.about_image}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                 <h3>About Section Title</h3>
+              <p>{{section.about_title}}</p>
+                <h3>About Section Description</h3>
+              <p class="text-center">{{section.about_description}}</p>
+                <h3>Text for volunteer Section in home Page</h3>
+                <p class="text-center">{{section.volunteer_text}}</p>
+
+                <h3>Volunteer Section Image</h3>
+                  <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{section.volunteer_image}}" alt="volunteer"
+                   style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+                 <h3>Volunteer Section Background Image</h3>
+                  <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{section.volunteer_bg_image}}" alt="bg-image"
+                   style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
-					<thead>
-						<tr><th>SN</th>
-							<th>Name</th>
-							<th>Contact</th>
-							<th>Address</th>
-							<th>VAT/PAN</th>
-							
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td><ol type="1">
-								
-							</ol></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							
-							<td></td>
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
-                             
-                              
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
-                             &nbsp; &nbsp; &nbsp; 
-                             
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
 
-						</tr>
-					  
+              {% endfor %}
+          </div>
 
-				</table>
+          <!-- /.box -->
+        </div>
+        <div class="col-12 col-lg-6">
+          <!-- Profile Image -->
+          <div class="box">
+{% for detail in details %}
+              <div class="row">
+                   <div class="col-12 col-lg-6">
+                    <a href="{% url 'admin:edit_detail' detail.id %}">
+    <button class="btn btn-info ">Update
+  </button></a>
+              </div>
+              </div>
+
+
+            <div class="box-body box-profile">
+				<div class="profile-user-info">
+					<p>Email address </p>
+					<h4 class="mb-20">{{detail.email}}</h4>
+					<p>Phone</p>
+					<h4 class="mb-20">{{detail.phone_number}}</h4>
+					<p>Address</p>
+					<h4 class="mb-20">{{detail.location}}</h4>
+					<p>Facebook Link </p>
+                     <a href="{{detail.facebook_link}}" target="_blank"><button class="btn btn-circle btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></button></a>
+					<h4 class="mb-20">{{detail.facebook_link}}</h4>
+
+					<p>Instagram Link </p>
+                        <a href="{{detail.insta_link}}" target="_blank"><button class="btn btn-circle btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></button></a>
+					<h4 class="mb-20">{{detail.insta_link}}</h4>
+
+					<p>Twitter Link </p>
+                     <a href="{{detail.twitter_link}}" target="_blank"><button class="btn btn-circle btn-social-icon btn-facebook"><i class="fa fa-twitter"></i></button></a>
+					<h4 class="mb-20">{{detail.twitter_link}}</h4>
+
+					<p>Website </p>
+					<h4 class="mb-20"><a href="{{detail.website}}"  target="_blank">{{detail.website}}</a> </h4>
+					<p>Map Link </p>
+					<h4 class="mb-20">{{detail.map_link|truncatechars:40}}</h4>
 				</div>
             </div>
             <!-- /.box-body -->
+
+
           </div>
+			{% endfor %}
           <!-- /.box -->
         </div>
+
         <!-- /.col -->
       </div>
       <!-- /.row -->
+
     </section>
-</div>
+    <!-- /.content -->
+  </div>
 
 
 {% endblock %}
