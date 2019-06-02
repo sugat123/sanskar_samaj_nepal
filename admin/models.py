@@ -104,11 +104,7 @@ class MoreImage(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
-<<<<<<< HEAD
-    date = models.DateTimeField(blank=True, null=True)
-=======
     date = models.DateTimeField(default=datetime.datetime.today)
->>>>>>> 5876d6d9c416c6563d6cae6aa661b3c3f77334be
     text = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='events', default='default.png')
     venue = models.CharField(max_length=60, blank=True, null=True)

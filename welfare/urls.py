@@ -25,7 +25,7 @@ from django.views.static import serve
 urlpatterns = [
     
     path('admin/', include('admin.urls')),
-    # path('', include('SanskarSamaj.urls')),
+    path('', include('SanskarSamaj.urls')),
     path('admin/password_reset/',auth_views.PasswordResetView.as_view(from_email="SanskarSamaj <anusha.rai1234@gmail.com>"),name='admin_password_reset'),
 path(
     'admin/password_reset/done/',

@@ -7,9 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.template import RequestContext
-<<<<<<< HEAD
 from SanskarSamaj.context_processor import volunteer_page2
-from admin.models import ContactForm, VolunteerForm
+from admin.models import *
 
 
 
@@ -28,24 +27,15 @@ from admin.models import ContactForm, VolunteerForm
 #     }
 #     return render(request, 'SanskarSamaj/base.html', context)
     
-=======
-# from SanskarSamaj.context_processor import volunteer_page2
-
-
-
-from admin.models import Banner, Causes, Testimonial, Gallery, Event, MoreImage
-
-
->>>>>>> 5876d6d9c416c6563d6cae6aa661b3c3f77334be
 def index(request):
     banner = Banner.objects.all()
-    cause = Causes.objects.all()
+    cause = Cause.objects.all()
     testimonial = Testimonial.objects.order_by('-pk')[0:2]
     gallery = Gallery.objects.order_by('-pk')[0:12]
     events = Event.objects.all().order_by('date')
     latest_event = Event.objects.order_by('-pk')[0:6]
     latest_event2 = Event.objects.order_by('-pk')[0:2]
-    volunteer = Volunteer.objects.all().order_by('date')
+    volunteer = SectionComponent.objects.all().order_by('date')
 
     if request.method == 'POST':
         form = VForm(request.POST)
