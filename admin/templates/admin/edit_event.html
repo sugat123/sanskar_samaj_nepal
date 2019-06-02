@@ -43,10 +43,28 @@
                             <div class="form-group">
                                 <h5>Event Date </h5>
                                 <div class="controls">
-                                    <input type="date" name="date" value="{{ event.date|date:'Y-m-d' }}" class="form-control"  aria-invalid="false"> <div class="help-block"></div></div>
+                                    <input type="date" name=""  class="form-control"  aria-invalid="false"> <div class="help-block"></div></div>
                                
                                     
                             </div>
+
+                            <div class="row">
+                                    <div class="col-12 col-lg-12">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                                <input type="text" name="date" value="{{ event.date|date:'%m/%d/%Y %I:%M %p' }}" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#datetimepicker1').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
                             
                             <div class="form-group">
                                 <h5>Event Venue </h5>
@@ -56,9 +74,9 @@
                             <div class="form-group">
                                 <h5>Event Description </h5>
                                 <div class="controls">
-                                        <textarea name="text"   class="form-control"  placeholder="Event Description" aria-invalid="false">
-                                                {{ event.text }}
-                                        </textarea>
+                                        <textarea name="text" data-provide="markdown" rows="10">{{ event.text }}</textarea>
+                                                
+                                        
                                         
                                     </div>
 

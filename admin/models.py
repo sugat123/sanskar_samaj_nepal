@@ -4,8 +4,6 @@ from django.db import models
 from autoslug import AutoSlugField
 
 
-
-
 class SectionComponent(models.Model):
     logo = models.ImageField(upload_to='setting', default='default.png')
     volunteer_image = models.ImageField(upload_to='setting', default='default.png')
@@ -41,8 +39,6 @@ class Banner(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class Cause(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     slug = AutoSlugField(unique_with='id', populate_from='title')
@@ -50,22 +46,19 @@ class Cause(models.Model):
     cause_image = models.ImageField(upload_to='cause', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, blank=True, null=True)
     featured = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.title
-
-
 
 
 class Testimonial(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     position = models.CharField(max_length=60, blank=True, null=True)
-    review = models.TextField(  blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='testimonial', default='default.png', blank=True, null=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
@@ -74,7 +67,6 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class Gallery(models.Model):
@@ -88,8 +80,6 @@ class Gallery(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class MoreImage(models.Model):
     image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='moreimage', default='default.png')
@@ -99,16 +89,15 @@ class MoreImage(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-
-
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
     date = models.DateTimeField(default=datetime.datetime.today)
+    
     text = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='events', default='default.png')
     venue = models.CharField(max_length=60, blank=True, null=True)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, blank=True, null=True)
     auto_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
@@ -122,12 +111,9 @@ class VolunteerForm(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 
-
 class ContactForm(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField()
     subject = models.CharField(max_length=60)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-
-

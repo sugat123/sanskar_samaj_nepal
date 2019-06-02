@@ -35,7 +35,8 @@
 					<thead>
 						<tr><th>SN</th>
 							<th>Event Title</th>
-							<th>Event Date</th>
+              <th>Event Date</th>
+              <th>Event Time</th>
 							<th>Event Venue</th>
 							<th>Image</th>
 							
@@ -49,7 +50,8 @@
 								{{ forloop.counter }}
 							</ol></td>
 							<td>{{ event.title }}</td>
-							<td>{{ event.date }}</td>
+              <td>{{ event.date|date }}</td>
+              <td>{{ event.date|time }}</td>
 							<td> {{ event.venue }}</td>
 							
 							<td><img src="/media/{{ event.image }}" alt="image" style="width:120px; height:80px;"></td>

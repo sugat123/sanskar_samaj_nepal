@@ -22,16 +22,18 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 text-center">
           <!-- Profile Image -->
           <div class="box">
               {% for section in settings %}
                 <div class="row">
-                   <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-4"></div>
+                   <div class="col-12 col-lg-4 mt-10">
                     <a href="{% url 'admin:edit_setting' section.id %}">
     <button class="btn btn-info ">Update
   </button></a>
               </div>
+              <div class="col-12 col-lg-4"></div>
               </div>
             <div class="box-body box-profile">
                  <h3>Logo</h3>
@@ -64,11 +66,13 @@
           <div class="box">
 {% for detail in details %}
               <div class="row">
-                   <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-4"></div>
+                   <div class="col-12 col-lg-4 mt-10">
                     <a href="{% url 'admin:edit_detail' detail.id %}">
     <button class="btn btn-info ">Update
   </button></a>
               </div>
+              <div class="col-12 col-lg-4"></div>
               </div>
 
 
