@@ -14,7 +14,6 @@
         Events
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Events</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
@@ -59,7 +58,7 @@
                                 <a href="{% url 'admin:edit_event' event.slug %}" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="{% url 'admin:delete_event' event.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_event' event.slug %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{event.slug}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  

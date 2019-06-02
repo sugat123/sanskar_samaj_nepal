@@ -14,7 +14,6 @@
         Causes
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Causes</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
@@ -36,9 +35,8 @@
 						<tr><th>SN</th>
 							<th>Cause Title</th>
 							<th>Image</th>
-						
-							
-							<th>Actions</th>
+                            <th>Views</th>
+	                        <th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,6 +48,7 @@
 							</ol></td>
 							<td>{{ cause.title }}</td>
 							<td><img src="/media/{{ cause.cause_image }}" alt="image" style="width:120px; height:120px;"></td>
+                            <td>{{cause.views}}</td>
 							
                             <td> <a href="{% url 'admin:detail_cause' cause.slug %}" data-toggle="tooltip"  title="View Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
@@ -57,7 +56,9 @@
                                 <a href="{% url 'admin:edit_cause' cause.slug %}" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="{% url 'admin:delete_cause' cause.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_cause' cause.slug %}"
+                              class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{cause.slug}}"
+                              ><i class="ti-trash"></i></a> </td>
 
          
                             </tr>

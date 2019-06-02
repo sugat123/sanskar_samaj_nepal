@@ -14,7 +14,6 @@
         Volunteers
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Volunteers</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
@@ -37,8 +36,6 @@
 							<th>Name</th>
 							<th>Email</th>
 							<th>Message</th>
-						
-							
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -47,19 +44,20 @@
 						<tr>
 							<td><ol type="1">
 								{{ forloop.counter }}
-							</ol>{{ volunteer.name }}</td>
+							</ol>
+                            </td>
+
+                                <td>{{ volunteer.name }}</td>
 							<td>{{ volunteer.email }}</td>
 							<td>{{ volunteer.message }}</td>
-						
-							
-						
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+
+                            <td> <a href="" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
+
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href=""  class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{volunteer.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  

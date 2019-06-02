@@ -59,7 +59,7 @@
                               
                                 
                              
-                              <a href="{% url 'admin:delete_gallery' gallery.slug %}" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_gallery' gallery.slug %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{gallery.slug}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  

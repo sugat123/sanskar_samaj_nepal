@@ -1,10 +1,113 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from admin.models import *
-from SanskarSamaj.views import contact_page
 from admin.forms import *
+from welfare import settings
 
+
+
+def register(request):
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to register users.')
+        return redirect('admin:dashboard')
+    if request.method == "POST":
+        form = AddUserForm(request.POST or None)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            messages.success(request, 'user created with username {}'.format(user.username))
+            return redirect('admin:register')
+    else:
+        form = AddUserForm()
+    return render(request, 'admin/add_user.html', {'form': form})
+
+
+
+def view_admin_user(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.warning(request, 'Permission Denied.You have no permission to view users.')
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    users = User.objects.filter(is_superuser=True).order_by('-date_joined')
+
+    return render(request, 'admin/admin_users.html', {'users': users, 'title': 'All Users'})
+
+def view_staff_user(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.warning(request, 'Permission Denied.You have no permission to view users.')
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+    users = User.objects.exclude(is_superuser=True).order_by('-date_joined')
+
+    return render(request, 'admin/staff_users.html', {'users': users, 'title': 'All Users'})
+
+
+
+
+
+def update_admin_user(request, id):
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to register users.')
+        return redirect('admin:view_admin_user')
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to perform this action.')
+        return redirect('admin:our_users')
+    user = get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        form = EditUserForm(request.POST or None, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            messages.success(request, '{} updated'.format(user.username))
+            return redirect('admin:view_admin_user')
+
+    return render(request,'admin/edit_admin_user.html',{'user':user})
+
+def update_staff_user(request, id):
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to register users.')
+        return redirect('admin:view_staff_user')
+
+    user = get_object_or_404(User,id=id)
+    if request.method == 'POST':
+        form = EditUserForm(request.POST or None, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            messages.success(request, '{} updated'.format(user.username))
+            return redirect('admin:view_staff_user')
+
+    return render(request,'admin/edit_user.html',{'user':user})
+
+def users_change_password(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Permission Denied.You have no permission to perform this action.')
+        return redirect('admin:our_users')
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('admin:dashboard')
+
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'admin/change_password.html', {
+        'form': form
+    })
+
+
+def deleteusers(request, id):
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to perform this action.')
+        return redirect('admin:our_users')
+    user = get_object_or_404(User, id=id)
+    user.delete()
+    messages.success(request, '{} deleted'.format(user.username))
+    return redirect('admin:our_users')
 
 def index(request):
     if request.method == 'POST':
@@ -12,31 +115,45 @@ def index(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            # remember_me = form.cleaned_data['remember_me']
+            remember_me = form.cleaned_data['remember_me']
             user = authenticate(request, username=username, password=password)
             if user and user.is_superuser:
                 login(request, user)
-                # if not remember_me:
-                #     request.session.set_expiry(0)
+                if not remember_me:
+                    request.session.set_expiry(0)
                 redirect_url = request.GET.get('next', 'admin:dashboard')
-                messages.success(request, 'logged in.')
+                messages.info(request, 'You are logged in as an admin .')
                 return redirect(redirect_url)
+            elif user and user.is_staff:
+                login(request, user)
+                if not remember_me:
+                    request.session.set_expiry(0)
+                redirect_url = request.GET.get('next', 'admin:dashboard')
+                messages.info(request, 'You are logged in as a staff member.')
+                return redirect(redirect_url)
+            elif user and not user.is_active:
+                messages.info(request, 'Your account is not active now.')
             else:
-                messages.error(request, 'Invalid username or password')
+                messages.error(request, 'Invalid Username and Password')
+        else:
+            messages.error(request, 'Invalid Form')
+
     else:
         form = LoginForm()
-    return render(request, 'admin/index.html', {'form': form})
+    return render(request, 'admin/index.html', {'form': form,'title':'Admin Login'})
 
 
 def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
         messages.success(request, 'logged out successfully')
-        return redirect('/')
+        return redirect('/admin/')
 
 
 def dashboard(request):
-    return render(request, 'admin/dashboard.html', {})
+    events = Event.objects.all().order_by('-date')
+    causes = Cause.objects.all().order_by('-date')
+    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes})
 
 
 def view_setting(request):
@@ -322,3 +439,113 @@ def contact_message(request):
 def volunteer_message(request):
     volunteers = VolunteerForm.objects.all().order_by('-date')
     return render(request, 'admin/volunteer_message.html', {'volunteers': volunteers})
+
+def delete_message(request,id):
+    message = get_object_or_404(ContactForm,id=id)
+    message.delete()
+    messages.success(request,'Deleted')
+    return redirect('admin:contact_message')
+def delete_volunteer(request,id):
+    message = get_object_or_404(VolunteerForm, id=id)
+    message.delete()
+    messages.success(request, 'Deleted')
+    return redirect('admin:volunteer_message')
+def delete_selected_message(request):
+    selected_messages = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    selected_messages.delete()
+    messages.success(request,'Deleted')
+    return redirect('admin:contact_message')
+def delete_selected_volunteer(request):
+    selected_volunteer = VolunteerForm.objects.filter(id__in=request.POST.getlist('volunteers'))
+    selected_volunteer.delete()
+    messages.success(request, 'Deleted')
+    return redirect('admin:volunteer_message')
+def delete_all_message(request):
+    all_messages = ContactForm.objects.all()
+    all_messages.delete()
+    messages.success(request, 'Deleted')
+    return redirect('admin:contact_message')
+def delete_all_volunteer(request):
+    all_volunteer = VolunteerForm.objects.all()
+    all_volunteer.delete()
+    messages.success(request, 'Deleted')
+    return redirect('admin:volunteer_message')
+
+def send_mail_contact(request,id):
+    contact = get_object_or_404(ContactForm,id=id)
+    form = SendMailContact(request.POST or None)
+    if form.is_valid():
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+
+        send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact])
+
+        messages.success(request, 'Success')
+        return redirect('admin:contact_message')
+
+def send_mail_selected_contact(request):
+    selected_contact = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    form = SendMailContact(request.POST or None)
+    if form.is_valid():
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        for contact in selected_contact:
+            send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact.email])
+        messages.success(request, 'Success')
+        return redirect('admin:contact_message')
+
+def send_mail_all_contact(request):
+    contacts = ContactForm.objects.all()
+    form = SendMailContact(request.POST or None)
+    if form.is_valid():
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        for contact in contacts:
+            send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact.email])
+        messages.success(request, 'Success')
+        return redirect('admin:contact_message')
+
+def send_mail_volunteer(request,id):
+    volunteer = get_object_or_404(VolunteerForm,id=id)
+    form = SendMailVolunteer(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
+
+        messages.success(request, 'Success')
+        return redirect('admin:volunteer_message')
+
+def send_mail_selected_volunteer(request):
+    volunteer = VolunteerForm.objects.filter(id__in = request.POST.getlist('volunteers'))
+    form = SendMailVolunteer(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+
+        form.save(commit=False)
+        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
+
+        messages.success(request, 'Success')
+        return redirect('admin:volunteer_message')
+def send_mail_all_volunteer(request):
+    volunteer = VolunteerForm.objects.all()
+    form = SendMailVolunteer(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
+        messages.success(request, 'Success')
+        return redirect('admin:volunteer_message')
+
+def send_mail_form(request):
+    contacts = ContactForm.objects.all()
+    contacts_selected = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    total_contacts = contacts.count()
+    total_selected_contacts = contacts_selected.count()
+    print(total_contacts)
+    print(total_selected_contacts)
+    return render(request,'admin/send_mail_form.html',{'total_contacts':total_contacts,'total_selected_contacts':total_selected_contacts})

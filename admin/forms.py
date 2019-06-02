@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from admin.models import *
 
@@ -6,6 +9,7 @@ from admin.models import *
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False)
 
 
 class SectionComponentForm(forms.ModelForm):
@@ -29,13 +33,13 @@ class AddBannerForm(forms.ModelForm):
 class AddEventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = '__all__'
+        exclude = ['views']
 
 
 class AddCauseForm(forms.ModelForm):
     class Meta:
         model = Cause
-        fields = '__all__'
+        exclude = ['views']
 
 
 class AddTestimonialForm(forms.ModelForm):
@@ -48,3 +52,38 @@ class AddGalleryForm(forms.ModelForm):
     class Meta:
         model = Gallery
         fields = '__all__'
+class SendMailContact(forms.Form):
+    subject = forms.CharField(max_length=250)
+    message = forms.CharField(widget=forms.Textarea)
+
+class SendMailVolunteer(forms.Form):
+    name = forms.CharField(max_length=250)
+    subject = forms.CharField(max_length=250)
+    message = forms.TextInput()
+
+
+class AddUserForm(UserCreationForm):
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise ValidationError('Email Already Exists')
+        return email
+
+    class Meta:
+        model = User
+        fields = ['username', "email", "password1", "password2", 'is_superuser', 'is_staff']
+
+
+class EditUserForm(forms.ModelForm):
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if self.instance and self.instance.pk and not User.objects.filter(email=email).exists():
+            return email
+
+        return email
+
+    class Meta:
+        model = User
+        fields = ['username', "email", 'is_superuser', 'is_staff', 'is_active']

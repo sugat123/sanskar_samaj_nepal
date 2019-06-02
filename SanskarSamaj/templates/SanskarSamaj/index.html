@@ -3,7 +3,13 @@
 {% load bootstrap4 %}
 {% block page_content %}
 {% for banner in banners %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.index_banner }}');" data-stellar-background-ratio="0.5">
 
     {% endfor %}
@@ -104,7 +110,7 @@
                             <a href="{% url 'causes_detail' cause.slug %}" class="img"
                                 style="background-image: url('/media/{{ cause.cause_image }}');"></a>
                             <div class="text p-3 p-md-4">
-                                <h3><a href="{% url 'causes_detail' causes.slug %}">{{ cause.title }}</a></h3>
+                                <h3><a href="{% url 'causes_detail' cause.slug %}">{{ cause.title }}</a></h3>
                                 <p>{{ cause.description | slice:":200" }}...</p>
 
                             </div>

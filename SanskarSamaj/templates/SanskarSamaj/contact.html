@@ -4,7 +4,13 @@
 {% block page_content %}
 
 {% for banner in banners %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.contact_banner }}');" data-stellar-background-ratio="0.5">
 
     {% endfor %}
@@ -26,7 +32,7 @@
 
 
             <div class="col-md-12 mb-4">
-                {% bootstrap_messages messages %}
+
                 
               <h2 class="h4">Contact Information</h2>
             </div>

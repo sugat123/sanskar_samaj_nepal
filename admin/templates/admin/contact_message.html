@@ -14,10 +14,10 @@
         Contacts
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Contacts</a></li>
         <li class="breadcrumb-item active">Messages</li>
       </ol>
+        {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -31,6 +31,8 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
+                     <form role="form" action="{% url 'admin:delete_selected_message' %}" method="post">
+                        {% csrf_token %}
 				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
@@ -38,29 +40,51 @@
 							<th>Email</th>
 							<th>Subject</th>
 							<th>Message</th>
-							
-							<th>Actions</th>
+                            <th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 					{% for contact in contacts %}
 						<tr>
 							<td><ol type="1">
-								{{ forloop.counter }}
-							</ol></td>
+                                 <input name ="messages" type="checkbox" id="contact-{{contact.id}}" value="{{contact.id}}" >
+                     <label for="contact-{{contact.id}}">{{ forloop.counter }}</label>
+
+							</ol>
+
+                            </td>
 							<td>{{ contact.name }}</td>
 							<td>{{ contact.email }}</td>
 							<td>{{ contact.subject }}</td>
 							
 							<td>{{ contact.message }}</td>
                             <td> 
-                            
-                             <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href="" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp;
+                                 <a href="/admin/send/mail/form/" data-toggle="tooltip"  title="Send Mail"><i class="ti-eye"></i></a> &nbsp;
+                             <a href="{% url 'admin:delete_message' contact.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{contact.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  
             {% endfor %}
 				</table>
+                          {% if contacts %}
+
+                   <button type="submit" class="btn btn-danger mb-5">
+                      Delete Selected Contacts
+
+                   </button>
+
+    <a href="{% url 'admin:delete_all_message' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
+            <button type="button" class="btn btn-danger mb-5">
+        Delete All
+     </button>
+    </a>
+
+                           <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal1">Send Mail To Selected Email</button>
+                          <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal">Send Mail To All</button>
+
+                        {% endif %}
+                     </form>
 				</div>
             </div>
             <!-- /.box-body -->
@@ -69,6 +93,57 @@
         </div>
         <!-- /.col -->
       </div>
+         <div class="modal" id="item-unit-modal1">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail To Selected Email </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_selected_contact' %}" class="unit-ajax-form">
+                                   {% csrf_token %}
+                                      <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                        <p><label>Message</label> <textarea  name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                      <button class="btn btn-primary mt-30">Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+         <div class="modal" id="item-unit-modal">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail To All </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_all_contact' %}" class="unit-ajax-form">
+                                   {% csrf_token %}
+                                      <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                      <button class="btn btn-primary mt-30">Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
       <!-- /.row -->
     </section>
 </div>
