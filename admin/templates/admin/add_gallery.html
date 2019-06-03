@@ -22,7 +22,9 @@
 
         {% if form.errors %}
         <div class="alert alert-danger ">
-            {{ form.errors }}
+             {% for field in form %}
+            {{ field.errors }}
+            {% endfor %}
 
         </div>
         {% endif %}
@@ -59,21 +61,31 @@
                                 
                             </div>
 
+                            
+
                             <div class="text-xs-right">
-                                <button type="submit" class="btn btn-info">Add</button>
+                                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#item-unit-modal1">Add</button>
                             </div>
+                            
+
+                            
                         </form>
                         
+                        
 
+                          
+
+                          
                     </div>
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
             </div>
+            
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
+        
     </section>
     <!-- /.content -->
 </div>

@@ -89,6 +89,8 @@ def causes_page(request):
 
 def causes_detail(request, slug):
     cause = Cause.objects.get(slug=slug)
+    cause.views += 1
+    cause.save()
     causes = Cause.objects.all()
     banner = Banner.objects.all()
     context = {

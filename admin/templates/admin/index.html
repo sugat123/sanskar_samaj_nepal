@@ -30,8 +30,9 @@
 
 
 </head>
-<body class="hold-transition bg-img" style="background-image:url(../../../images/bg-2.jpg)" data-overlay=5>
-
+{% for section in sections %}
+<body class="hold-transition bg-img" style="background-image:url('/media/{{ section.login_bg }}')" data-overlay=5>
+{% endfor %}
 	<div class="container pt-3 h-p100">
 	  <div class="row h-p100 justify-content-sm-center align-items-center">
 		<div class="col-sm-6 col-md-4">

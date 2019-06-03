@@ -3,7 +3,13 @@
 {% load bootstrap4 %}
 {% block page_content %}
 {% for banner in banners %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.index_banner }}');" data-stellar-background-ratio="0.5">
 
     {% endfor %}

@@ -14,10 +14,10 @@
         Volunteers
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
         <li class="breadcrumb-item"><a href="#">Volunteers</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
+      {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -31,14 +31,14 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
+            <form role="form" action="{% url 'admin:delete_selected_volunteer' %}" method="post">
+                {% csrf_token %}
 				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
 							<th>Name</th>
 							<th>Email</th>
 							<th>Message</th>
-						
-							
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -46,25 +46,46 @@
 					{% for volunteer in volunteers %}
 						<tr>
 							<td><ol type="1">
-								{{ forloop.counter }}
-							</ol>{{ volunteer.name }}</td>
+                  <input name ="volunteers" type="checkbox" id="volunteer-{{volunteer.id}}" value="{{volunteer.id}}" >
+                  <label for="volunteer-{{volunteer.id}}">{{ forloop.counter }}</label>
+							</ol>
+                            </td>
+
+                                <td>{{ volunteer.name }}</td>
 							<td>{{ volunteer.email }}</td>
 							<td>{{ volunteer.message }}</td>
-						
-							
-						
-                            <td> <a href="" data-toggle="tooltip"  title="View Purchase Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+
+                            <td> <a href="" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-                                <a href="" data-toggle="tooltip"  title="Edit"><i class="ti-pencil"></i></a> 
+
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href="" data-toggle="tooltip"  title="Delete"><i class="ti-trash"></i></a> </td>
+                              <a href=""  class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{volunteer.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
 					  
             {% endfor %}
-				</table>
+        </table>
+
+        {% if volunteers %}
+        
+        <button type="submit" class="btn btn-danger mb-5">
+          Delete Selected Messages
+
+       </button>
+
+      <a href="{% url 'admin:delete_all_volunteer' %}" class="confirm-delete" title="Delete" data-toggle="modal"
+        data-target="#confirmDeleteModal" id="delete_all_messages">
+        <button type="button" class="btn btn-danger mb-5">
+          Delete All
+        </button>
+      </a>
+      <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal1">Send Mail To Selected Email</button>
+      <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal">Send Mail To All</button>
+
+      {% endif %}
+            </form>
 				</div>
             </div>
             <!-- /.box-body -->
