@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Image
+            Add Album
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Gallery</a></li>
@@ -22,9 +22,9 @@
 
         {% if form.errors %}
         <div class="alert alert-danger ">
-             {% for field in form %}
-            {{ field.errors }}
-            {% endfor %}
+
+            {{ form.errors }}
+
 
         </div>
         {% endif %}
@@ -40,7 +40,7 @@
                             <div class="form-group">
                                 <h5>Title</h5>
                                 <div class="controls">
-                                    <input type="text" name="image_title" value="" class="form-control" ></div>
+                                    <input type="text" name="image_title"  class="form-control" ></div>
                             </div>
                             <div class="form-group">
                                     <h5>Date </h5>
@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <h5>Upload Image</h5>
                                 <div class="controls">
-                                    <input type="file" name="image"  class="form-control" multiple >
+                                    <input type="file" name="image"  class="form-control"  >
                                     <div class="help-block"></div>
                                 </div>
                                 

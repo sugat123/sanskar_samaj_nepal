@@ -1,0 +1,99 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}Edit Gallery Data {% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Update Gallery Info
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Gallery</a></li>
+            <li class="breadcrumb-item"><a href="#">Update </a></li>
+
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+
+            {{ form.errors }}
+
+
+        </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin:edit_gallery' gallery.slug %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <h5>Title</h5>
+                                <div class="controls">
+                                    <input type="text" name="image_title" value="{{gallery.image_title}}" class="form-control" ></div>
+                            </div>
+                            <div class="form-group">
+                                    <h5>Date </h5>
+                                    <div class="controls">
+                                        <input type="date" name="image_date"value="{{gallery.image_date|date:'Y-m-d'}}" class="form-control"  aria-invalid="false"> <div class="help-block"></div></div>
+
+
+                                </div>
+
+
+
+                            <div class="form-group">
+                                <h5>Upload Image</h5>
+                                <div class="controls">
+                                    <input type="file" name="image"  class="form-control"  >
+                                    <div class="help-block"></div>
+                                </div>
+
+                                   Currently:<img class="profile-user-img mx-auto rounded-circle " src="/media/{{ gallery.image }}" alt="volunteer"
+                   style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+
+
+
+                            </div>
+
+
+
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#item-unit-modal1">Update</button>
+                            </div>
+
+
+
+                        </form>
+
+
+
+
+
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

@@ -27,7 +27,7 @@
         <div class="col-12">
             <div class="box box-solid box-primary">
             <div class="box-header with-border">
-              <h4 class="box-title">View Images</h4>
+              <h4 class="box-title">View Albums</h4>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -39,7 +39,8 @@
 						<tr><th>SN</th>
 							<th>Title</th>
 							<th>Date</th>
-							<th>Image</th>
+                            <th>Views</th>
+                            <th>Image</th>
 							
 							
 							<th>Actions</th>
@@ -55,12 +56,15 @@
 							</ol></td>
 							<td>{{ gallery.image_title }}</td>
 							<td>{{ gallery.image_date }}</td>
-							<td><img src="/media/{{ gallery.image }}" alt="image" style="width:120px; height:120px;"></td>
+                            <td>{{gallery.views}}</td>
+							<td><img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{ gallery.image }}" alt="volunteer"
+                   style="height: 100px; width: 100px; border-radius: 50%; object-fit: cover;"></td>
 							
 							
                             <td> <a href="{% url 'admin:detail_gallery' gallery.slug %}" data-toggle="tooltip"  title="View More Images"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
-                              
+                             <a href="{% url 'admin:edit_gallery' gallery.slug %}" data-toggle="tooltip"  title="Update"><i class="ti-pencil"></i></a> &nbsp; &nbsp; &nbsp;
+
                                 
                              
                               <a href="{% url 'admin:delete_gallery' gallery.slug %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{gallery.slug}}"><i class="ti-trash"></i></a> </td>

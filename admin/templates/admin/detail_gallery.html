@@ -1,37 +1,56 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
+<<<<<<< HEAD
 <title>{% block title %}More Images {% endblock %} </title>
+=======
+<title>{% block title %}Gallery Detail {% endblock %} </title>
+>>>>>>> 7c1298e270402b3d1755a1ce2d9fd1fbfe2f6b3d
 
 {% block content %}
 
 <div class="content-wrapper">
-
-    <!-- Main content -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        More Images
+        Album Images of {{gallery.image_title}}
       </h1>
       <ol class="breadcrumb">
-        
-        <li class="breadcrumb-item"><a href="#">Gallery</a></li>
-        <li class="breadcrumb-item active">More Images</li>
+        <li class="breadcrumb-item"><a href="#">{{gallery.image_title}}</a></li>
+        <li class="breadcrumb-item active">Images</li>
       </ol>
-      {% bootstrap_messages %}
+        {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
     <section class="content">
-            <div class="box">
-                    <div class="box-body">
-                          
-                    </div>
-                    <!-- /.box-body -->
-                  </div>
-     
-    </section>
+
+       <div class="row">
+            {% for image in more_images %}
+        <div class="col-md-4 py-30">
+
+
+                  <img src="/media/{{image.image}}" width="300" height="300" >
+<br><br>
+    <a class="btn btn-sm btn-info-outline"  href="{% url 'admin:edit_more_image' image.id %}" title="Update">
+        <i class="ti-pencil" aria-hidden="true">
+        </i>
+    </a>
+
+    <a class="btn btn-sm btn-danger-outline confirm-delete" href="{% url 'admin:delete_more_image' image.id %} "
+    title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{image.id}}">
+  <i class="ti-trash" aria-hidden="true"></i>
+        </a>
+
+
 </div>
+        {% endfor %}
+
+       </div>
+      <!-- /.row -->
+
+    </section>
 
 
+</div>
 {% endblock %}

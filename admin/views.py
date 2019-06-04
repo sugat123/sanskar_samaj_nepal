@@ -158,8 +158,14 @@ def dashboard(request):
     sections = SectionComponent.objects.all()
     events = Event.objects.all().order_by('-date')
     causes = Cause.objects.all().order_by('-date')
+<<<<<<< HEAD
     
     return render(request, 'admin/dashboard.html', {'events':events,'causes':causes, 'sections':sections})
+=======
+    volunteers = VolunteerForm.objects.all().order_by('-date')
+    contacts = ContactForm.objects.all().order_by('-date')
+    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes,'volunteers':volunteers,'contacts':contacts})
+>>>>>>> 7c1298e270402b3d1755a1ce2d9fd1fbfe2f6b3d
 
 
 def view_setting(request):
@@ -449,7 +455,6 @@ def add_gallery(request):
         form = AddGalleryForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             gallery = form.save(commit=False)
-            gallery = form.save(commit=False)
             gallery.save()
             messages.success(request, ' Image added.')
             return redirect('admin:add_more_image')
@@ -461,26 +466,21 @@ def add_more_image(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')
-    gallery = Gallery.objects.all().order_by('-pk')
+    images = Gallery.objects.all().order_by('-date')
     if request.method == 'POST':
         form = MoreImageForm(request.POST or None, request.FILES or None)
         if form.is_valid():
-
-            more = form.save(commit=False)
-            for field in request.FILES.keys():
-                for formfile in request.FILES.getlist(field):
-                    img = MoreImage(image=formfile)
-                    img.save()
-            for g in gallery:
-                more.image_title_id=g.id
+            more = form.save()
             more.save()
-            messages.success(request, ' Images added.')
-            return redirect('admin:add_gallery')
+            for file in request.FILES.getlist('image'):
+                MoreImage.objects.create(image_title=more.image_title, image=file)
+            messages.success(request, 'Images added.')
+            return redirect('admin:view_gallery')
         else:
             return HttpResponse(form.errors)
     else:
         form = MoreImageForm()
-    return render(request, 'admin/more_image.html', {'form': form})
+    return render(request, 'admin/more_image.html', {'form': form,'images':images})
 
 
 def edit_gallery(request, slug):
@@ -490,7 +490,7 @@ def edit_gallery(request, slug):
     gallery = get_object_or_404(Gallery, slug=slug)
     if request.method == 'POST':
 
-        form = AddGalleryForm(request.POST or None, instance=gallery)
+        form = AddGalleryForm(request.POST or None,request.FILES or None,instance=gallery)
         if form.is_valid():
             gallery = form.save(commit=False)
             gallery.save()
@@ -530,13 +530,36 @@ def delete_all_gallery(request):
     return redirect('admin:view_gallery')
 
 
+def edit_more_image(request,id):
+    image = get_object_or_404(MoreImage,id=id)
+    form = MoreImageForm(request.POST or None,request.FILES or None,instance=image)
+    if form.is_valid():
+        form.save()
+        messages.success(request,'updated')
+        return redirect('admin:edit_more_image',image.id)
+
+    return render(request,'admin/edit_image.html',{'image':image})
+def delete_more_image(request,id):
+    image = MoreImage.objects.get(id=id)
+
+    image.delete()
+    messages.success(request,'success')
+    return redirect('admin:view_gallery')
+
+def delete_image(request,slug):
+    image = Gallery.objects.get(slug=slug)
+    image.delete()
+    return redirect('/')
 def detail_gallery(request, slug):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')
     gallery = get_object_or_404(Gallery, slug=slug)
+    images = MoreImage.objects.all().order_by('-date')
+    more_images = MoreImage.objects.filter(image_title_id=gallery)
 
-    return render(request, 'admin/detail_gallery.html', {'gallery': gallery})
+
+    return render(request, 'admin/detail_gallery.html', {'gallery': gallery,'more_images':more_images,'images':images})
 
 
 def view_testimonial(request):
@@ -653,6 +676,8 @@ def delete_volunteer(request,id):
     message.delete()
     messages.success(request, 'Deleted')
     return redirect('admin:volunteer_message')
+<<<<<<< HEAD
+=======
 def delete_selected_message(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
@@ -661,6 +686,7 @@ def delete_selected_message(request):
     selected_messages.delete()
     messages.success(request,'Deleted')
     return redirect('admin:contact_message')
+>>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
 def delete_selected_volunteer(request):
 
     if not request.user.is_superuser:
@@ -725,13 +751,13 @@ def send_mail_volunteer(request,id):
         return redirect('admin:volunteer_message')
 
 def send_mail_all_volunteer(request):
-    volunteer = VolunteerForm.objects.all()
+    volunteers = VolunteerForm.objects.all()
     form = SendMailVolunteer(request.POST or None)
     if form.is_valid():
-        name = form.cleaned_data['name']
         subject = form.cleaned_data['subject']
         message = form.cleaned_data['message']
-        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
+        for volunteer in volunteers:
+            send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer.email])
         messages.success(request, 'Mail Sent.')
         return redirect('admin:volunteer_message')
 
