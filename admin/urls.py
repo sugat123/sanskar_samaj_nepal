@@ -57,12 +57,9 @@ urlpatterns = [
     path('<slug>/edit/testimonial/', views.edit_testimonial, name='edit_testimonial'),
     path('<int:id>/delete/message/', views.delete_message, name='delete_message'),
     path('<int:id>/delete/volunteer/', views.delete_volunteer, name='delete_volunteer'),
-<<<<<<< HEAD
     path('delete/selected/message/', views.delete_selected_message, name='delete_selected_message'),
     path('delete/selected/cause/', views.delete_selected_cause, name='delete_selected_cause'),
     path('delete/selected/event/', views.delete_selected_event, name='delete_selected_event'),
-=======
->>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
     path('delete/selected/volunteer/', views.delete_selected_volunteer, name='delete_selected_volunteer'),
      path('delete/selected/testimonial/', views.delete_selected_testimonial, name='delete_selected_testimonial'),
     path('delete/selected/gallery/', views.delete_selected_gallery, name='delete_selected_gallery'),
@@ -78,9 +75,6 @@ urlpatterns = [
     path('<int:id>/send/mail/volunteer/', views.send_mail_volunteer, name='send_mail_volunteer'),
     path('all/send/mail/contact', views.send_mail_all_contact, name='send_mail_all_contact'),
     path('all/send/mail/volunteer/', views.send_mail_all_volunteer, name='send_mail_all_volunteer'),
-<<<<<<< HEAD
-    
-=======
 
     path('password-reset/',
          auth_views.PasswordResetView.as_view(template_name='admin/password_reset.html',
@@ -103,6 +97,5 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='admin/password_reset_complete.html',
 
                                                       ), name='password_reset_complete')
->>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
 
 ]

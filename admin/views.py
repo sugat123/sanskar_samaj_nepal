@@ -651,7 +651,6 @@ def delete_volunteer(request,id):
     message.delete()
     messages.success(request, 'Deleted')
     return redirect('admin:volunteer_message')
-<<<<<<< HEAD
 def delete_selected_message(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
@@ -660,9 +659,6 @@ def delete_selected_message(request):
     selected_messages.delete()
     messages.success(request,'Deleted')
     return redirect('admin:contact_message')
-=======
-
->>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
 def delete_selected_volunteer(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
@@ -736,8 +732,6 @@ def send_mail_all_volunteer(request):
         messages.success(request, 'Mail Sent.')
         return redirect('admin:volunteer_message')
 
-<<<<<<< HEAD
-=======
 def contact_detail(request,id):
     contact = get_object_or_404(ContactForm,id=id)
     return render(request,'admin/contact_detail.html',{'contact':contact})
@@ -745,4 +739,3 @@ def contact_detail(request,id):
 def volunteer_detail(request,id):
     volunteer = get_object_or_404(VolunteerForm,id=id)
     return render(request,'admin/volunteer_detail.html',{'volunteer':volunteer})
->>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
