@@ -39,10 +39,7 @@
 
 		  <div class="card border-info text-center">
               {% bootstrap_messages %}
-			<div class="card-header">
-			  Login in to continue
 
-			</div>
 			<div class="card-body">
 				<a class="auth-brand text-center d-block mb-20" href="#">
 					{% for section in sections %}
@@ -54,12 +51,12 @@
                   {% csrf_token %}
 				<input type="text" class="form-control mb-2" name='username' placeholder="Username" required autofocus>
 			<input type="password" class="form-control mb-2" name='password' placeholder="Password" required>
-				<button class="btn btn-lg btn-primary btn-block mb-20" type="submit">Sign in</button>
-				  <div class="checkbox float-left">
-					<input type="checkbox"  name="remember_me" id="basic_checkbox_1" >
-					<label for="basic_checkbox_1">Remember me</label>
-				  </div>
-				<a href="{% url 'admin:password_reset' %}" class="float-right">Forgot Password?</a>
+				<button class="btn btn-lg btn-primary btn-block mb-20" type="submit">Log in</button>
+<!--				  <div class="checkbox float-left">-->
+<!--					<input type="checkbox"  name="remember_me" id="basic_checkbox_1" >-->
+<!--					<label for="basic_checkbox_1">Remember me</label>-->
+<!--				  </div>-->
+				<center><a href="{% url 'admin:password_reset' %}" >Forgot Password?</a></center>
 			  </form>
 			</div>
 		  </div>

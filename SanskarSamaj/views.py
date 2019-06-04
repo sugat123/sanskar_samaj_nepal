@@ -6,7 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 
 from SanskarSamaj.forms import CForm, VForm
-from admin.models import Testimonial, Cause, Banner, Gallery, Event, VolunteerForm, MoreImage, SectionComponent, Detail
+from admin.models import Testimonial, Cause, Banner, Gallery, Event, VolunteerForm, MoreImage, SectionComponent, Detail, \
+    EmailToReceive
 
 
 def index(request):
@@ -31,17 +32,10 @@ def index(request):
 
 
 def gallery(request):
-<<<<<<< HEAD
-    galleries = Gallery.objects.all().order_by('-date')
-    banner = Banner.objects.all()
-=======
+
     galleries = Gallery.objects.filter().order_by('-date')
     banners = Banner.objects.all()
-<<<<<<< HEAD
     latest_event2 = Event.objects.order_by('-pk')[0:2]
-=======
->>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
->>>>>>> 7c1298e270402b3d1755a1ce2d9fd1fbfe2f6b3d
     page = request.GET.get('page', 1)
     paginator = Paginator(galleries, 9)
     try:
@@ -61,23 +55,23 @@ def gallery(request):
 
 
 def gallery_detail(request, slug):
-<<<<<<< HEAD
+
     gallerys = Gallery.objects.filter(active=True).order_by('-date')
     latest_event2 = Event.objects.order_by('-pk')[0:2]
-=======
+
     gallerys = Gallery.objects.all().order_by('-date')
->>>>>>> 7c1298e270402b3d1755a1ce2d9fd1fbfe2f6b3d
+
     gallery = Gallery.objects.get(slug=slug)
     gallery.views += 1
-<<<<<<< HEAD
+
     gallery.save()
     banner = Banner.objects.all()
-=======
+
     gallery.save(
 
     )
     banners = Banner.objects.all()
->>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
+
 
     more_images = MoreImage.objects.filter(image_title_id=gallery)
 
@@ -145,6 +139,7 @@ def volunteer_page(request):
 def contact_page(request):
     banner = Banner.objects.all()
     latest_event2 = Event.objects.order_by('-pk')[0:2]
+    emails = EmailToReceive.objects.all()
     if request.method == 'POST':
         form = CForm(request.POST)
         form2 = VForm(request.POST)
@@ -156,7 +151,8 @@ def contact_page(request):
                                                                                            form.cleaned_data['message'])
 
             form.save(commit=False)
-            send_mail(name, message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', ['sugatp454@gmail.com'])
+            for email in emails:
+                send_mail(name, message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [email.email])
             form.save()
             messages.success(request, 'Success')
             return redirect('contact_page')
@@ -233,8 +229,16 @@ def events_detail(request, slug):
     }
     return render(request, 'SanskarSamaj/events_detail.html', context)
 
-# def handler404(request):
-#     return render(request, 'SanskarSamaj/404.html', status = 404)
+def view404(request):
+    return render(request, 'admin/404.html', status=404)
 
-# def handler500(request):
-#     return render(request, 'SanskarSamaj/500.html', status = 500)
+
+def view500(request):
+    return render(request, 'admin/404.html', status=500)
+
+def view403(request):
+    return render(request, 'admin/404.html', status=403)
+def view400(request):
+    return render(request, 'admin/404.html', status=400)
+def view405(request):
+    return render(request, 'admin/404.html', status=405)

@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>{% block title %}Home{% endblock %}</title>
+    <title>{% block title %}Admin Home{% endblock %}</title>
 
 	<!-- Bootstrap 4.0-->
 	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap/dist/css/bootstrap.css' %}">
@@ -237,6 +237,21 @@
                         </a>
                         
                       </li>
+          <li class="treeview">
+                    <a href="#">
+                        <i class="ti-email"></i>
+                        <span>Email</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{% url 'admin:add_email'  %}"><i class="fa fa-plus"></i>Add </a></li>
+                        <li><a href="{% url 'admin:view_emails'  %}"><i class="fa fa-table"></i>View</a></li>
+
+                    </ul>
+
+                </li>
            <li class="treeview">
                     <a href="#">
                         <i class="ti-user"></i>

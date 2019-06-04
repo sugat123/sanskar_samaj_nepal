@@ -1,0 +1,68 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}Update Emails{% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Update Email
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Email</a></li>
+            <li class="breadcrumb-item"><a href="#">Update </a></li>
+
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+             {% for field in form %}
+            {{ field.errors }}
+            {% endfor %}
+
+        </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin:update_email' email.id %}" method="post" >
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <h5>Email</h5>
+                                <div class="controls">
+                                    <input type="email" name="email"  value="{{email.email}}" class="form-control" ></div>
+                            </div>
+                            
+                            
+                           
+
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

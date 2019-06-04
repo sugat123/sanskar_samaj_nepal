@@ -3,7 +3,13 @@
 {% load bootstrap4 %}
 {% block title %} Volunteer{% endblock %}
 {% block page_content %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 
 {% for banner in banners %}
 

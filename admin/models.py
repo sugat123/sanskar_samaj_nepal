@@ -121,3 +121,7 @@ class ContactForm(models.Model):
     subject = models.CharField(max_length=60)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+
+class EmailToReceive(models.Model):
+    email = models.EmailField(unique=True)
+    date = models.DateTimeField(auto_now_add=True)

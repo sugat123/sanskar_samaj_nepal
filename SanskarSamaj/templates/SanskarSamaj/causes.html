@@ -2,7 +2,13 @@
 {% load static %}
 {% block title %}Causes{% endblock %}
 {% block page_content %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 {% for banner in banners %}
 
 

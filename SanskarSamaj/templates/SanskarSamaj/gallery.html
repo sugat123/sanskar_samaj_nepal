@@ -2,15 +2,17 @@
 {% load static %}
 {% block title %} Gallery{% endblock %}
 {% block page_content %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 {% for banner in banners %}
 
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.gallery_banner }}');" data-stellar-background-ratio="0.5">
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
     {% endfor %}
     <div class="overlay"></div>
     <div class="container">
@@ -30,11 +32,7 @@
 
 
       <div class="row">
-<<<<<<< HEAD
-            {% for gallerys in galleries %}
-=======
             {% for gallery in galleries %}
->>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
         <div class="col-md-4">
             <div class="item">
                 <div class="cause-entry">

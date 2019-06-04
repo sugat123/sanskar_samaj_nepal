@@ -2,18 +2,17 @@
 {% load static %}
 {% block title %}More Images{% endblock %}
 {% block page_content %}
-
-<<<<<<< HEAD
-{% for banners in banner %}
-
-<div class="hero-wrap" style="background-image: url('/media/{{ banners.gallery_banner }}');" data-stellar-background-ratio="0.5">
-
-=======
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 {% for banner in banners %}
 
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.gallery_banner }}');" data-stellar-background-ratio="0.5">
   
->>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
   {% endfor %}
     <div class="overlay"></div>
     <div class="container">

@@ -98,3 +98,8 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [ 'username', "email", 'is_superuser', 'is_active']
+
+class AddEmail(forms.ModelForm):
+    class Meta:
+        model = EmailToReceive
+        fields = '__all__'

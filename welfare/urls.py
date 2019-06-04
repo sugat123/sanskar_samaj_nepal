@@ -16,12 +16,15 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.urls import path, include
 from welfare import settings
-from django.contrib.auth import views as auth_views
+
 from SanskarSamaj import views
 from django.views.static import serve
 
-# handler404 = views.handler404
-# handler500 = views.handler500
+handler404 = views.view404
+handler500 = views.view500
+handler403 = views.view403
+handler400 = views.view400
+handler405 = views.view405
 urlpatterns = [
     
     path('admin/', include('admin.urls')),

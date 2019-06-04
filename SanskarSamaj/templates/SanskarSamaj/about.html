@@ -2,7 +2,13 @@
 {% load static %}
 {% block title %}About Us{% endblock %}
 {% block page_content %}
-
+{% if messages %}
+   <script>
+    {% for message in messages %}
+        alert("{{ message }}");
+    {% endfor %}
+   </script>
+{% endif %}
 {% for banner in banners %}
 
 <div class="hero-wrap" style="background-image: url('/media/{{ banner.about_banner }}');" data-stellar-background-ratio="0.5">
