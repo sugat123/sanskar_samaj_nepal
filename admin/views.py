@@ -660,6 +660,7 @@ def delete_selected_message(request):
     messages.success(request,'Deleted')
     return redirect('admin:contact_message')
 def delete_selected_volunteer(request):
+    
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')

@@ -37,10 +37,10 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-            {% for navs in nav %}
+            {% for section in sections %}
             <a class="navbar-brand" href="{% url 'index' %}">
 
-                    <img src="/media/{{ navs.logo }}" alt="Sanskar Samaj">
+                    <img src="/media/{{ section.logo }}" alt="Sanskar Samaj">
             
             
                   </a>
@@ -72,16 +72,16 @@
 
   {% block page_content %} {% endblock %}
   
-  {% for volunteers in volunteer %}
-  {% if forloop.first %}
-  <section class="ftco-section-3 img" style="background-image: url('/media/{{ volunteers.bg_image }}');">
+  {% for section in sections %}
+  
+  <section class="ftco-section-3 img" style="background-image: url('/media/{{ section.volunteer_bg_image }}');">
     <div class="overlay"></div>
     <div class="container">
       <div class="row d-md-flex">
         <div class="col-md-6 d-flex ftco-animate">
-          <div class="img img-2 align-self-stretch" style="background-image: url('/media/{{ volunteers.image }}');"></div>
+          <div class="img img-2 align-self-stretch" style="background-image: url('/media/{{ section.volunteer_image }}');"></div>
         </div>
-        {% endif %}
+        
         {% endfor %}
         <div class="col-md-6 volunteer pl-md-5 ftco-animate">
           <h3 class="mb-3">Be a volunteer</h3>
@@ -114,14 +114,14 @@
         <div class="col-md-3">
           <div class="ftco-footer-widget mb-4">
             <h2 class="ftco-heading-2"><a href="{% url 'about_page' %}">About Us</a></h2>
-            {% for abouts in about %}
-            <p>{{ abouts.description | truncatewords:20 }}...</p>
+            {% for section in sections %}
+            <p>{{ section.about_description | truncatewords:20 }}...</p>
             {% endfor %}
-            {% for footers in footer %}
+            {% for detail in details %}
             <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-              <li class="ftco-animate"><a href="{{ footers.twitter_link }}" target = "_blank"><span class="icon-twitter"></span></a></li>
-              <li class="ftco-animate"><a href="{{ footers.facebook_link }}" target = "_blank"><span class="icon-facebook"></span></a></li>
-              <li class="ftco-animate"><a href="{{ footers.insta_link }}" target = "_blank"><span class="icon-instagram"></span></a></li>
+              <li class="ftco-animate"><a href="{{ detail.twitter_link }}" target = "_blank"><span class="icon-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="{{ detail.facebook_link }}" target = "_blank"><span class="icon-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="{{ detail.insta_link }}" target = "_blank"><span class="icon-instagram"></span></a></li>
             </ul>
             {% endfor %}
           </div>
@@ -163,12 +163,12 @@
             <h2 class="ftco-heading-2">Have a Questions?</h2>
             <div class="block-23 mb-3">
               <ul>
-                  {% for footers in footer %}
-                  {% if forloop.first %}
-                <li><span class="icon icon-map-marker"></span><span class="text">{{ footers.location }}</span></li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">{{ footers.phone_number }}</span></a></li>
-                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">{{ footers.email }}</span></a></li>
-                      {% endif %}
+                  {% for detail in details %}
+                 
+                <li><span class="icon icon-map-marker"></span><span class="text">{{ detail.location }}</span></li>
+                <li><a href="#"><span class="icon icon-phone"></span><span class="text">{{ detail.phone_number }}</span></a></li>
+                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">{{ detail.email }}</span></a></li>
+                     
                       {% endfor %}
               </ul>
             </div>

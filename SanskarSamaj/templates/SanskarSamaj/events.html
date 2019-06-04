@@ -2,11 +2,11 @@
 {% load static %}
 {% block page_content %}
 
-{% for events in banner %}
-{% if forloop.last %}
+{% for banner in banners %}
 
-<div class="hero-wrap" style="background-image: url('/media/{{ events.events_banner }}');" data-stellar-background-ratio="0.5">
-    {% endif %}
+
+<div class="hero-wrap" style="background-image: url('/media/{{ banner.events_banner }}');" data-stellar-background-ratio="0.5">
+  
     {% endfor %}
     <div class="overlay"></div>
     <div class="container">
@@ -33,12 +33,12 @@
                      
                       <div class="text p-4 d-block">
                         <div class="meta mb-3">
-                          <div><a href="#"><i class="icon-date_range"></i>{{ events.date|date }}</a></div>
+                          <div><a href="#"><i class="icon-date_range"></i>{{ events.date }}</a></div>
                           
                           
                         </div>
                         <h3 class="heading mb-4"><a href="{% url 'events_detail' events.slug %}">{{ events.title }}</a></h3>
-                        <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> {{ events.date|time }} onwards</span> <span><i
+                        <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> {{ events.time }} onwards</span> <span><i
                           class="icon-map-o"></i> Venue: &nbsp; {{ events.venue }} </span></p>
                         <p>{{ events.text | slice:":400" }}</p>
                         

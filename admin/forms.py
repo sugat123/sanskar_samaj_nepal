@@ -54,7 +54,7 @@ class AddTestimonialForm(forms.ModelForm):
 class AddGalleryForm(forms.ModelForm):
     class Meta:
         model = Gallery
-        fields = '__all__'
+        exclude = ['views']
 
 class MoreImageForm(forms.ModelForm):
     # photo = ImageField()
