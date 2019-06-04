@@ -31,7 +31,7 @@ def index(request):
 
 
 def gallery(request):
-    galleries = Gallery.objects.filter().order_by('-date')
+    galleries = Gallery.objects.all().order_by('-date')
     banner = Banner.objects.all()
     page = request.GET.get('page', 1)
     paginator = Paginator(galleries, 9)
@@ -51,15 +51,13 @@ def gallery(request):
 
 
 def gallery_detail(request, slug):
-    gallerys = Gallery.objects.filter(active=True).order_by('-date')
+    gallerys = Gallery.objects.all().order_by('-date')
     gallery = Gallery.objects.get(slug=slug)
     gallery.views += 1
-    gallery.save(
-
-    )
+    gallery.save()
     banner = Banner.objects.all()
 
-    more_images = MoreImage.objects.filter(active=True, image_title_id=gallery)
+    more_images = MoreImage.objects.filter(image_title_id=gallery)
 
     context = {
         'gallery': gallery,

@@ -54,13 +54,12 @@ class AddTestimonialForm(forms.ModelForm):
 class AddGalleryForm(forms.ModelForm):
     class Meta:
         model = Gallery
-        fields = '__all__'
+        exclude = ['views']
 
 class MoreImageForm(forms.ModelForm):
-    # photo = ImageField()
     class Meta:
         model = MoreImage
-        exclude = ['image_title']
+        fields = '__all__'
         
 class SendMailContact(forms.Form):
     subject = forms.CharField(max_length=250)

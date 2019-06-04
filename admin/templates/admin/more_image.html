@@ -9,7 +9,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add More Images
+            Add More Images to the Album
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Gallery</a></li>
@@ -23,9 +23,9 @@
 
         {% if form.errors %}
         <div class="alert alert-danger ">
-             {% for field in form %}
-            {{ field.errors }}
-            {% endfor %}
+
+            {{ form.errors }}
+
 
         </div>
         {% endif %}
@@ -41,7 +41,19 @@
                             
                             
                             
-                           
+
+                  <div class="form-group">
+                    <label>Select Album</label>
+                    <div class="form-group">
+                      <select name="image_title" class="form-control mr-3" style="width:50%; display:inline;" required >
+                          {% for i in images %}
+                          <option value="{{i.id}}">{{i.image_title}}</option>
+                          {% endfor %}
+                          </select>
+
+
+                    </div>
+                  </div>
                             <div class="form-group">
                                 <h5>Select Image to upload</h5>
                                 <div class="controls">
