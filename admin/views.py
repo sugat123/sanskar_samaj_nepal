@@ -433,7 +433,10 @@ def detail_testimonial(request, slug):
 
 def contact_message(request):
     contacts = ContactForm.objects.all().order_by('-date')
-    return render(request, 'admin/contact_message.html', {'contacts': contacts})
+    selected_contacts = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    print(selected_contacts)
+
+    return render(request, 'admin/contact_message.html', {'contacts': contacts,'selected_contacts':selected_contacts})
 
 
 def volunteer_message(request):
@@ -450,11 +453,7 @@ def delete_volunteer(request,id):
     message.delete()
     messages.success(request, 'Deleted')
     return redirect('admin:volunteer_message')
-def delete_selected_message(request):
-    selected_messages = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
-    selected_messages.delete()
-    messages.success(request,'Deleted')
-    return redirect('admin:contact_message')
+
 def delete_selected_volunteer(request):
     selected_volunteer = VolunteerForm.objects.filter(id__in=request.POST.getlist('volunteers'))
     selected_volunteer.delete()
@@ -478,21 +477,11 @@ def send_mail_contact(request,id):
         subject = form.cleaned_data['subject']
         message = form.cleaned_data['message']
 
-        send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact])
+        send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact.email])
 
-        messages.success(request, 'Success')
+        messages.success(request, 'Mail Sent.')
         return redirect('admin:contact_message')
 
-def send_mail_selected_contact(request):
-    selected_contact = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
-    form = SendMailContact(request.POST or None)
-    if form.is_valid():
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        for contact in selected_contact:
-            send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact.email])
-        messages.success(request, 'Success')
-        return redirect('admin:contact_message')
 
 def send_mail_all_contact(request):
     contacts = ContactForm.objects.all()
@@ -502,34 +491,20 @@ def send_mail_all_contact(request):
         message = form.cleaned_data['message']
         for contact in contacts:
             send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [contact.email])
-        messages.success(request, 'Success')
+        messages.success(request, 'Mail Sent.')
         return redirect('admin:contact_message')
 
 def send_mail_volunteer(request,id):
     volunteer = get_object_or_404(VolunteerForm,id=id)
     form = SendMailVolunteer(request.POST or None)
     if form.is_valid():
-        name = form.cleaned_data['name']
         subject = form.cleaned_data['subject']
         message = form.cleaned_data['message']
-        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
+        send_mail(subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer.email])
 
-        messages.success(request, 'Success')
+        messages.success(request, 'Mail Sent.')
         return redirect('admin:volunteer_message')
 
-def send_mail_selected_volunteer(request):
-    volunteer = VolunteerForm.objects.filter(id__in = request.POST.getlist('volunteers'))
-    form = SendMailVolunteer(request.POST or None)
-    if form.is_valid():
-        name = form.cleaned_data['name']
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-
-        form.save(commit=False)
-        send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
-
-        messages.success(request, 'Success')
-        return redirect('admin:volunteer_message')
 def send_mail_all_volunteer(request):
     volunteer = VolunteerForm.objects.all()
     form = SendMailVolunteer(request.POST or None)
@@ -538,14 +513,13 @@ def send_mail_all_volunteer(request):
         subject = form.cleaned_data['subject']
         message = form.cleaned_data['message']
         send_mail(name,subject,message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', [volunteer])
-        messages.success(request, 'Success')
+        messages.success(request, 'Mail Sent.')
         return redirect('admin:volunteer_message')
 
-def send_mail_form(request):
-    contacts = ContactForm.objects.all()
-    contacts_selected = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
-    total_contacts = contacts.count()
-    total_selected_contacts = contacts_selected.count()
-    print(total_contacts)
-    print(total_selected_contacts)
-    return render(request,'admin/send_mail_form.html',{'total_contacts':total_contacts,'total_selected_contacts':total_selected_contacts})
+def contact_detail(request,id):
+    contact = get_object_or_404(ContactForm,id=id)
+    return render(request,'admin/contact_detail.html',{'contact':contact})
+
+def volunteer_detail(request,id):
+    volunteer = get_object_or_404(VolunteerForm,id=id)
+    return render(request,'admin/volunteer_detail.html',{'volunteer':volunteer})

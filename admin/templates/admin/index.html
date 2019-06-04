@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/images/favicon.ico">
 
-    <title>{{title}} </title>
+    <title>{% block title %}{{title}}{% endblock %} </title>
 
 	<!-- Bootstrap 4.0-->
 	<link rel="stylesheet" href="{% static '/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css' %}">
@@ -31,7 +31,7 @@
 
 </head>
 <body class="hold-transition bg-img" style="background-image:url(../../../images/bg-2.jpg)" data-overlay=5>
-
+{% block content %}
 	<div class="container pt-3 h-p100">
 	  <div class="row h-p100 justify-content-sm-center align-items-center">
 		<div class="col-sm-6 col-md-4">
@@ -56,13 +56,14 @@
 					<input type="checkbox"  name="remember_me" id="basic_checkbox_1" >
 					<label for="basic_checkbox_1">Remember me</label>
 				  </div>
-				<a href="#" class="float-right">Need help?</a>
+				<a href="{% url 'admin:password_reset' %}" class="float-right">Forgot Password?</a>
 			  </form>
 			</div>
 		  </div>
 		</div>
 	  </div>
 	</div>
+{% endblock %}
 
 
 	<!-- jQuery 3 -->

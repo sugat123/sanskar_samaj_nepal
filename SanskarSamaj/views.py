@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
@@ -125,10 +126,7 @@ def contact_page(request):
                                                                                            form.cleaned_data['message'])
 
             form.save(commit=False)
-            try:
-                send_mail(name, message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', ['sugatp454@gmail.com'])
-            except:
-                return HttpResponse('Invalid header found')
+            send_mail(name, message, 'Sanskar Samaj <settings.EMAIL_HOST_USER>', ['sugatp454@gmail.com'])
             form.save()
             messages.success(request, 'Success')
             return redirect('contact_page')
@@ -190,6 +188,8 @@ def events_page(request):
 
 def events_detail(request, slug):
     event = Event.objects.get(slug=slug)
+    event.views += 1
+    event.save()
     banner = Banner.objects.all()
     events = Event.objects.all()
     latest_event2 = Event.objects.order_by('-pk')[0:2]

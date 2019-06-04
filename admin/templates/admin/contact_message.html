@@ -20,8 +20,12 @@
         {% bootstrap_messages %}
     </section>
 
+
     <!-- Main content -->
     <section class="content">
+        {% if form.errors %}
+        {{form.errors}}
+        {% endif %}
       <div class="row">
         <div class="col-12">
             <div class="box box-solid box-primary">
@@ -31,8 +35,6 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
-                     <form role="form" action="{% url 'admin:delete_selected_message' %}" method="post">
-                        {% csrf_token %}
 				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
@@ -40,15 +42,14 @@
 							<th>Email</th>
 							<th>Subject</th>
 							<th>Message</th>
-                            <th>Actions</th>
+              <th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 					{% for contact in contacts %}
 						<tr>
 							<td><ol type="1">
-                                 <input name ="messages" type="checkbox" id="contact-{{contact.id}}" value="{{contact.id}}" >
-                     <label for="contact-{{contact.id}}">{{ forloop.counter }}</label>
+                                {{ forloop.counter }}
 
 							</ol>
 
@@ -57,22 +58,48 @@
 							<td>{{ contact.email }}</td>
 							<td>{{ contact.subject }}</td>
 							
-							<td>{{ contact.message }}</td>
+							<td>{{ contact.message|truncatewords:10 }}</td>
                             <td> 
-                              <a href="" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp;
-                                 <a href="/admin/send/mail/form/" data-toggle="tooltip"  title="Send Mail"><i class="ti-eye"></i></a> &nbsp;
+                              <a href="{% url 'admin:contact_detail' contact.id %}" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp;
+                                 <a  data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail"><i class="ti-email"></i></a> &nbsp;
                              <a href="{% url 'admin:delete_message' contact.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{contact.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
+
+<div class="modal" id="item-unit-modal2">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_contact' contact.id %}" class="unit-ajax-form">
+                                   {% csrf_token %}
+                                    <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                      <button class="btn btn-primary mt-30"  >Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
 					  
             {% endfor %}
 				</table>
+
+
+
                           {% if contacts %}
 
-                   <button type="submit" class="btn btn-danger mb-5">
-                      Delete Selected Contacts
 
-                   </button>
 
     <a href="{% url 'admin:delete_all_message' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
             <button type="button" class="btn btn-danger mb-5">
@@ -80,11 +107,10 @@
      </button>
     </a>
 
-                           <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal1">Send Mail To Selected Email</button>
                           <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal">Send Mail To All</button>
 
                         {% endif %}
-                     </form>
+
 				</div>
             </div>
             <!-- /.box-body -->
@@ -93,21 +119,26 @@
         </div>
         <!-- /.col -->
       </div>
+
+
+
          <div class="modal" id="item-unit-modal1">
                               <div class="modal-dialog">
                                 <div class="modal-content">
 
                                   <div class="modal-header">
                                     <h4 class="modal-title">Send Mail To Selected Email </h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <button type="button" name="send" class="close" data-dismiss="modal">&times;</button>
                                   </div>
 
                                   <div class="modal-body">
-                                    <form method="POST" action="{% url 'admin:send_mail_selected_contact' %}" class="unit-ajax-form">
+                                    <form method="POST" action="/admin/selected/send/mail/contact/" class="unit-ajax-form ">
                                    {% csrf_token %}
-                                      <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+
+
+                                       <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
                                         <p><label>Message</label> <textarea  name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
-                                      <button class="btn btn-primary mt-30">Send Mail</button>
+                                      <button type="submit" class="btn btn-primary mt-30">Send Mail</button>
                                     </form>
                                   </div>
 
@@ -147,6 +178,25 @@
       <!-- /.row -->
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$(document).on('click', '.send-mail-to-selected-btn', function(){
+  var messages = new Array();
+$("input:checked").each(function() {
+    messages.push($(this).val());
+});
+
+console.log(messages);
+});
+
+$.ajax({
+    url:'/admin/selected/send/mail/contact/',
+    data:{
+        name: name,
+        messages: messages,
+    }
+});
+</script>
 
 
 {% endblock %}

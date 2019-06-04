@@ -57,9 +57,9 @@ class SendMailContact(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
 class SendMailVolunteer(forms.Form):
-    name = forms.CharField(max_length=250)
+
     subject = forms.CharField(max_length=250)
-    message = forms.TextInput()
+    message = forms.CharField(widget=forms.Textarea)
 
 
 class AddUserForm(UserCreationForm):
