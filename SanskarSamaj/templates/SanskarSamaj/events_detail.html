@@ -1,0 +1,81 @@
+{% extends "SanskarSamaj/base.html" %}
+{% load static %}
+{% block page_content %}
+
+{% for events in banner %}
+{% if forloop.last %}
+<div class="hero-wrap" style="background-image: url('/media/{{ events.events_banner }}');" data-stellar-background-ratio="0.5">
+  {% endif %}
+    {% endfor %}
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+        <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+           <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="{% url 'index' %}">Home</a></span> <span class="mr-2"><a href="{% url 'events_page' %}">Event</a></span> <span>Events Details</span></p>
+          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Events Detail</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+        <section class="ftco-section bg-light">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="detail-pro">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="sub-title">{{ event.title }}</h3>
+                    </div>
+                    <div class="card-text">
+              <p>{{ event.text }}</p>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="about-img-box">
+                <img src="/media/{{ event.image }}" height="350" alt="" class="card-img-top">
+            </div>
+        </div>
+    </div>
+        </section>
+
+    <section class="ftco-section bg-light">
+            <div class="container">
+              <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section ftco-animate text-center">
+                  <h2 class="mb-4">Our Latest Events</h2>
+                </div>
+              </div>
+              <div class="row">
+                    {% for event in events %}
+                  <div class="col-md-4 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                      <a href="{% url 'events_detail' event.slug %}" class="block-20" style="background-image: url('/media/{{ event.image }}');">
+                      </a>
+                      <div class="text p-4 d-block">
+                        <div class="meta mb-3">
+                          <div><a href="#"><i class="icon-date_range"></i>{{ event.date }}</a></div>
+                          
+                          
+                        </div>
+                        <h3 class="heading mb-4"><a href="{% url 'events_detail' event.slug %}">{{ event.title }}</a></h3>
+                        <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> {{ event.time }} onwards</span> <span><i
+                              class="icon-map-o"></i> Venue: &nbsp; {{ event.venue }} </span></p>
+                        <p>{{ event.text | slice:":200" }}...</p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+                </div>
+            </div>
+          </section>
+</div>
+
+{% endblock %}
