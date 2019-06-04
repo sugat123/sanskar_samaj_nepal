@@ -22,20 +22,22 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 text-center">
           <!-- Profile Image -->
           <div class="box">
               {% for section in settings %}
                 <div class="row">
-                   <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-4"></div>
+                   <div class="col-12 col-lg-4 mt-10">
                     <a href="{% url 'admin:edit_setting' section.id %}">
     <button class="btn btn-info ">Update
   </button></a>
               </div>
+              <div class="col-12 col-lg-4"></div>
               </div>
             <div class="box-body box-profile">
                  <h3>Logo</h3>
-                  <img src="/media/{{section.logo}}" alt="logo">
+                  <img  src="/media/{{section.logo}}" alt="logo">
                 <h3>About Section Image</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{section.about_image}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
@@ -43,6 +45,9 @@
               <p>{{section.about_title}}</p>
                 <h3>About Section Description</h3>
               <p class="text-center">{{section.about_description}}</p>
+              <h3>Login Page Background Image</h3>
+                <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{section.login_bg}}" alt="about"
+              style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
                 <h3>Text for volunteer Section in home Page</h3>
                 <p class="text-center">{{section.volunteer_text}}</p>
 
@@ -64,11 +69,13 @@
           <div class="box">
 {% for detail in details %}
               <div class="row">
-                   <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-4"></div>
+                   <div class="col-12 col-lg-4 mt-10">
                     <a href="{% url 'admin:edit_detail' detail.id %}">
     <button class="btn btn-info ">Update
   </button></a>
               </div>
+              <div class="col-12 col-lg-4"></div>
               </div>
 
 

@@ -17,6 +17,7 @@
         <li class="breadcrumb-item"><a href="#">Causes</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
+      {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -30,7 +31,9 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+            <form role="form" action="{% url 'admin:delete_selected_cause' %}" method="post">
+                {% csrf_token %}
+          <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
 							<th>Cause Title</th>
@@ -44,7 +47,9 @@
 						<tr>
                
 							<td><ol type="1">
-								{{ forloop.counter }}
+                  <input name ="causes" type="checkbox" id="cause-{{cause.id}}" value="{{cause.id}}" >
+                  <label for="cause-{{cause.id}}">{{ forloop.counter }}</label>
+								
 							</ol></td>
 							<td>{{ cause.title }}</td>
 							<td><img src="/media/{{ cause.cause_image }}" alt="image" style="width:120px; height:120px;"></td>
@@ -64,7 +69,25 @@
                             </tr>
 					  
                             {% endfor %}
-				</table>
+        </table>
+        {% if causes %}
+        
+        <button type="submit" class="btn btn-danger mb-5">
+           Delete Selected Cause
+
+        </button>
+      
+
+<a href="{% url 'admin:delete_all_cause' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
+ <button type="button" class="btn btn-danger mb-5">
+Delete All
+</button>
+</a>
+
+                
+
+             {% endif %}
+          </form>
 				</div>
             </div>
             <!-- /.box-body -->

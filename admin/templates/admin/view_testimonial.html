@@ -17,6 +17,7 @@
         <li class="breadcrumb-item"><a href="#">Testimonials</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
+      {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -30,7 +31,9 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+            <form role="form" action="{% url 'admin:delete_selected_testimonial' %}" method="post">
+                {% csrf_token %}
+          <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
 							<th>Name</th>
@@ -46,7 +49,8 @@
 						<tr>
               {% for testimonial in testimonials %}
 							<td><ol type="1">
-								{{ forloop.counter }}
+                  <input name ="testimonials" type="checkbox" id="testimonial-{{testimonial.id}}" value="{{testimonial.id}}" >
+                  <label for="testimonial-{{testimonial.id}}">{{ forloop.counter }}</label>
 							</ol></td>
 							<td>{{ testimonial.title }}</td>
 							<td>{{ testimonial.position }}</td>
@@ -64,7 +68,25 @@
 						</tr>
 					  {% endfor %}
 
-				</table>
+        </table>
+        {% if testimonials %}
+        
+        <button type="submit" class="btn btn-danger mb-5">
+           Delete Selected Testimonial
+
+        </button>
+        
+
+<a href="{% url 'admin:delete_all_testimonial' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
+ <button type="button" class="btn btn-danger mb-5">
+Delete All
+</button>
+</a>
+
+                
+
+             {% endif %}
+          </form>
 				</div>
             </div>
             <!-- /.box-body -->

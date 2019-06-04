@@ -22,48 +22,67 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-1"></div>
+        <div class="col-12 col-lg-9">
           <!-- Profile Image -->
           <div class="box">
               {% for banner in banners %}
                 <div class="row">
-                   <div class="col-12 col-lg-12">
+                  <div class="col-12 col-lg-4"></div>
+                   <div class="col-12 col-lg-4 mt-10 ml-50">
                     <a href="{% url 'admin:edit_banner' banner.id %}">
+
     <button class="btn btn-info ">Update
   </button></a>
               </div>
+              <div class="col-12 col-lg-4"></div>
               </div>
             <div class="box-body box-profile">
-
-                <h3>Home Banner</h3>
+              <div class="row text-center">
+              <div class="col-12 col-lg-6 ">
+                <h3>Home Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.index_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="col-12 col-lg-6">
                  <h3>About Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.about_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="col-12 col-lg-6">
                 <h3>Events Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.events_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="col-12 col-lg-6">
                 <h3>Causes Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.causes_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="col-12 col-lg-6">
                 <h3>Volunteer Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.volunteer_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="col-12 col-lg-6">
                 <h3>Gallery Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.gallery_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
+              </div>
+              <div class="col-12 col-lg-6">
                 <h3>Contact Page Banner</h3>
                 <img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{banner.contact_banner}}" alt="about"
               style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover;">
             </div>
+            </div>
+          </div>
 
               {% endfor %}
           </div>
 
           <!-- /.box -->
         </div>
-
+        <div class="col-12 col-lg-1"></div>
 
         <!-- /.col -->
       </div>

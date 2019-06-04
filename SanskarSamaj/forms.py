@@ -1,3 +1,4 @@
+from SanskarSamaj.models import *
 from django import forms
 
 from admin.models import ContactForm, VolunteerForm
@@ -13,3 +14,5 @@ class VForm(forms.ModelForm):
     class Meta:
         model = VolunteerForm
         fields = ['name', 'email', 'message']
+
+

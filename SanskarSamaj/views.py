@@ -31,19 +31,19 @@ def index(request):
 
 
 def gallery(request):
-    gallery = Gallery.objects.filter(active=True).order_by('-date')
+    galleries = Gallery.objects.filter().order_by('-date')
     banner = Banner.objects.all()
     page = request.GET.get('page', 1)
-    paginator = Paginator(gallery, 9)
+    paginator = Paginator(galleries, 9)
     try:
-        gallery = paginator.page(page)
+        galleries = paginator.page(page)
     except PageNotAnInteger:
-        gallery = paginator.page(1)
+        galleries = paginator.page(1)
     except EmptyPage:
-        gallery = paginator.page(paginator.num_pages)
+        galleries = paginator.page(paginator.num_pages)
 
     context = {
-        'gallery': gallery,
+        'galleries': galleries,
         'banner': banner,
 
     }

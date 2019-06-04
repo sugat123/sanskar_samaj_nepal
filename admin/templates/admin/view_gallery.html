@@ -14,10 +14,11 @@
         Gallery
       </h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#"><i class="iconsmind-Library"></i></a></li>
+        
         <li class="breadcrumb-item"><a href="#">Gallery</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
+      {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -31,7 +32,9 @@
             <!-- /.box-header -->
             <div class="box-body">
 				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+            <form role="form" action="{% url 'admin:delete_selected_gallery' %}" method="post">
+                {% csrf_token %}
+          <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
 							<th>Title</th>
@@ -47,7 +50,8 @@
 						<tr>
               {% for gallery in gallerys %}
 							<td><ol type="1">
-								{{ forloop.counter }}
+                  <input name ="galleries" type="checkbox" id="gallery-{{gallery.id}}" value="{{gallery.id}}" >
+                  <label for="gallery-{{gallery.id}}">{{ forloop.counter }}</label>
 							</ol></td>
 							<td>{{ gallery.image_title }}</td>
 							<td>{{ gallery.image_date }}</td>
@@ -64,7 +68,25 @@
 						</tr>
 					  
 {% endfor %}
-				</table>
+        </table>
+        {% if gallerys %}
+        
+        <button type="submit" class="btn btn-danger mb-5">
+           Delete Selected Image
+
+        </button>
+        
+
+<a href="{% url 'admin:delete_all_gallery' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
+ <button type="button" class="btn btn-danger mb-5">
+Delete All
+</button>
+</a>
+
+                
+
+             {% endif %}
+          </form>
 				</div>
             </div>
             <!-- /.box-body -->

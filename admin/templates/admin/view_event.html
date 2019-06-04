@@ -17,6 +17,7 @@
         <li class="breadcrumb-item"><a href="#">Events</a></li>
         <li class="breadcrumb-item active">View</li>
       </ol>
+      {% bootstrap_messages %}
     </section>
 
     <!-- Main content -->
@@ -29,12 +30,16 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                
 				<div class="table-responsive">
-				  <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+            <form role="form" action="{% url 'admin:delete_selected_event' %}" method="post">
+                {% csrf_token %}
+          <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
 					<thead>
 						<tr><th>SN</th>
 							<th>Event Title</th>
-							<th>Event Date</th>
+              <th>Event Date</th>
+              <th>Event Time</th>
 							<th>Event Venue</th>
 							<th>Image</th>
 							
@@ -42,13 +47,18 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for event in events %}
+
+          {% for event in events %}
+         
 						<tr>
 							<td><ol type="1">
-								{{ forloop.counter }}
+                  <input name ="events" type="checkbox" id="event-{{event.id}}" value="{{event.id}}" >
+                  <label for="event-{{event.id}}">{{ forloop.counter }}</label>
+								
 							</ol></td>
 							<td>{{ event.title }}</td>
-							<td>{{ event.date }}</td>
+              <td>{{ event.date }}</td>
+              <td>{{ event.time }}</td>
 							<td> {{ event.venue }}</td>
 							
 							<td><img src="/media/{{ event.image }}" alt="image" style="width:120px; height:80px;"></td>
@@ -63,7 +73,25 @@
 						</tr>
 					  
             {% endfor %}
-				</table>
+        </table>
+        {% if events %}
+        
+        <button type="submit" class="btn btn-danger mb-5">
+           Delete Selected Event
+
+        </button>
+        
+
+<a href="{% url 'admin:delete_all_event' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
+ <button type="button" class="btn btn-danger mb-5">
+Delete All
+</button>
+</a>
+
+                
+
+             {% endif %}
+          </form>
 				</div>
             </div>
             <!-- /.box-body -->

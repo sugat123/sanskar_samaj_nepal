@@ -13,6 +13,7 @@ class SectionComponent(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     about_image = models.ImageField(upload_to='about', default='default.png')
     about_description = models.TextField()
+    login_bg = models.ImageField(upload_to='setting', default='default.png')
 
 
 class Detail(models.Model):
@@ -46,7 +47,7 @@ class Cause(models.Model):
     cause_image = models.ImageField(upload_to='cause', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, blank=True, null=True)
     featured = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
 
@@ -82,7 +83,7 @@ class Gallery(models.Model):
 
 
 class MoreImage(models.Model):
-    image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='moreimage', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
@@ -93,11 +94,12 @@ class MoreImage(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(unique_with='id', populate_from='title')
-    date = models.DateTimeField(default=datetime.datetime.today)
+    date = models.DateField(default=datetime.datetime.today)
+    time = models.TimeField( blank=True, null=True)
     text = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='events', default='default.png')
     venue = models.CharField(max_length=60, blank=True, null=True)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, blank=True, null=True)
     auto_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
