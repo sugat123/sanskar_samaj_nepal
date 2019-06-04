@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} {% endblock %} </title>
+<title>{% block title %}Volunteers {% endblock %} </title>
 
 {% block content %}
 
@@ -55,15 +55,40 @@
 							<td>{{ volunteer.email }}</td>
 							<td>{{ volunteer.message }}</td>
 
-                            <td> <a href="" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+                            <td> <a href="{% url 'admin:volunteer_detail' volunteer.id %}" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               
-
+ <a  data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail"><i class="ti-email"></i></a>
                              &nbsp; &nbsp; &nbsp; 
                              
-                              <a href=""  class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{volunteer.id}}"><i class="ti-trash"></i></a> </td>
+                              <a href="{% url 'admin:delete_volunteer' volunteer.id %}"  class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{volunteer.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
+                    <div class="modal" id="item-unit-modal2">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_volunteer' volunteer.id %}" class="unit-ajax-form">
+                                   {% csrf_token %}
+                                    <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                      <button class="btn btn-primary mt-30"  >Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
 					  
             {% endfor %}
         </table>

@@ -1,0 +1,76 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}Volunteer Detail {% endblock %} </title>
+
+{% block content %}
+
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Volunteer Detail
+      </h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Volunteer</a></li>
+        <li class="breadcrumb-item active">Detail</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+          
+
+            <div class="col-md-12 col-lg-8" >
+                    <div class="card">
+                      <div class="card-body">
+                        <b>Sender Name:</b><h4 class="card-title">{{ volunteer.name }}</h4>
+                        <b>Sender Email Address:</b><h4 class="card-text">{{ volunteer.email }}</h4>
+                          <b>Message:</b><h4><p class="card-text">{{ volunteer.message }}</p></h4>
+                          <b>Sent on:</b><h4 class="font-size-14 text-muted">{{ volunteer.date }}</h4>
+
+                      </div>
+
+
+
+
+
+                    </div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail">Reply</button> &nbsp;
+                        <div class="modal" id="item-unit-modal2">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_volunteer' volunteer.id %}" class="unit-ajax-form">
+                                   {% csrf_token %}
+                                    <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                      <button class="btn btn-primary mt-30"  >Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                </div>
+                <div class="col-md-12 col-lg-2"></div>
+            </div>
+
+    </section>
+</div>
+
+
+{% endblock %}

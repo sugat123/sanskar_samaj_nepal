@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, reverse_lazy
 
 from admin import views
+from django.contrib.auth import views as auth_views
 
 app_name = 'admin'
 
@@ -13,6 +14,9 @@ urlpatterns = [
 
     path('<int:id>/delete/user', views.deleteusers, name='delete_user'),
     path('change/password/', views.users_change_password, name='change_password'),
+
+
+
 
     path('view/admin/', views.view_admin_user, name='view_admin_user'),
     path('view/staff/', views.view_staff_user, name='view_staff_user'),
@@ -53,13 +57,18 @@ urlpatterns = [
     path('<slug>/edit/testimonial/', views.edit_testimonial, name='edit_testimonial'),
     path('<int:id>/delete/message/', views.delete_message, name='delete_message'),
     path('<int:id>/delete/volunteer/', views.delete_volunteer, name='delete_volunteer'),
+<<<<<<< HEAD
     path('delete/selected/message/', views.delete_selected_message, name='delete_selected_message'),
     path('delete/selected/cause/', views.delete_selected_cause, name='delete_selected_cause'),
     path('delete/selected/event/', views.delete_selected_event, name='delete_selected_event'),
+=======
+>>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
     path('delete/selected/volunteer/', views.delete_selected_volunteer, name='delete_selected_volunteer'),
      path('delete/selected/testimonial/', views.delete_selected_testimonial, name='delete_selected_testimonial'),
     path('delete/selected/gallery/', views.delete_selected_gallery, name='delete_selected_gallery'),
     path('delete/all/message/', views.delete_all_message, name='delete_all_message'),
+    path('<int:id>/contact/detail/', views.contact_detail, name='contact_detail'),
+    path('<int:id>/volunteer/detail/', views.volunteer_detail, name='volunteer_detail'),
     path('delete/all/volunteer/', views.delete_all_volunteer, name='delete_all_volunteer'),
     path('delete/all/cause/', views.delete_all_cause, name='delete_all_cause'),
     path('delete/all/event/', views.delete_all_event, name='delete_all_event'),
@@ -67,10 +76,33 @@ urlpatterns = [
     path('delete/all/testimonial/', views.delete_all_testimonial, name='delete_all_testimonial'),
     path('<int:id>/send/mail/contact/', views.send_mail_contact, name='send_mail_contact'),
     path('<int:id>/send/mail/volunteer/', views.send_mail_volunteer, name='send_mail_volunteer'),
-    path('selected/send/mail/contact/', views.send_mail_selected_contact, name='send_mail_selected_contact'),
-    path('selected/send/mail/volunteer/', views.send_mail_selected_volunteer, name='send_mail_selected_volunteer'),
     path('all/send/mail/contact', views.send_mail_all_contact, name='send_mail_all_contact'),
     path('all/send/mail/volunteer/', views.send_mail_all_volunteer, name='send_mail_all_volunteer'),
+<<<<<<< HEAD
     
+=======
+
+    path('password-reset/',
+         auth_views.PasswordResetView.as_view(template_name='admin/password_reset.html',
+                                              email_template_name='admin/password_reset_email.html',
+                                              success_url=reverse_lazy('admin:password_reset_done', ),
+                                              from_email="Sanskar Samaj<yourmailuser01@gmail.com>",
+                                              ),
+         name='password_reset'),
+
+    path('password-reset/done/',
+         auth_views.PasswordResetDoneView.as_view(template_name='admin/password_reset_done.html', ),
+         name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='admin/password_reset_confirm.html',
+                                                     success_url=reverse_lazy('admin:password_reset_complete', ),
+
+                                                     ),
+         name='password_reset_confirm'),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(template_name='admin/password_reset_complete.html',
+
+                                                      ), name='password_reset_complete')
+>>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
 
 ]
