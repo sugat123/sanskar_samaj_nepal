@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %}{{title}} {% endblock %}</title>
+<title>{% block title %}Update Setting {% endblock %}</title>
 <!-- Content Wrapper. Contains page content -->
 {% block content %}
 <div class="content-wrapper">
@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <h5>About Section Description </h5>
                                 <div class="controls">
-                                        <textarea name="about_description" id="about_description" class="form-control" required placeholder="About Us Description" aria-invalid="false">
+                                        <textarea name="about_description" id="about_description" data-provide="markdown" rows="10">
                                             {{ setting.about_description }}
                                         </textarea>
                                     </div>
@@ -75,7 +75,11 @@
                             <div class="form-group">
                                 <h5>Description for Volunteer Section in home page: </h5>
                                 <div class="controls">
-                                    <input type="text" name="volunteer_text" value="{{ setting.volunteer_text }}" class="form-control"></div>
+                                        <textarea name="volunteer_text" id="about_description" data-provide="markdown" rows="10">
+                                                {{ setting.volunteer_text }}
+                                        </textarea>
+                                    
+                                </div>
                             </div>
 
                             <div class="form-group">

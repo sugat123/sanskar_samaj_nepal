@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} {% endblock %} </title>
+<title>{% block title %} Contact Messages{% endblock %} </title>
 
 {% block content %}
 
@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Contacts
+        Contacts &nbsp; <span class="badge badge-pill badge-info">{{ contacts|length }}</span>
       </h1>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Contacts</a></li>
@@ -61,7 +61,7 @@
 							<td>{{ contact.message|truncatewords:10 }}</td>
                             <td> 
                               <a href="{% url 'admin:contact_detail' contact.id %}" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp;
-                                 <a  data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail"><i class="ti-email"></i></a> &nbsp;
+                                 <a  data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail"><i class="ti-email"></i></a> &nbsp; &nbsp;
                              <a href="{% url 'admin:delete_message' contact.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{contact.id}}"><i class="ti-trash"></i></a> </td>
 
 						</tr>
@@ -79,7 +79,7 @@
                                     <form method="POST" action="{% url 'admin:send_mail_contact' contact.id %}" class="unit-ajax-form">
                                    {% csrf_token %}
                                     <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
-                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
                                       <button class="btn btn-primary mt-30"  >Send Mail</button>
                                     </form>
                                   </div>
@@ -99,11 +99,6 @@
 
                           {% if contacts %}
 
-<<<<<<< HEAD
-                   <button type="submit" class="btn btn-danger mb-5">
-                      Delete Selected Messages
-=======
->>>>>>> f940db9475a94e68556adf8ef2fa35fa0bee0cde
 
 
     <a href="{% url 'admin:delete_all_message' %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="delete_all_messages">
@@ -127,33 +122,7 @@
 
 
 
-         <div class="modal" id="item-unit-modal1">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                  <div class="modal-header">
-                                    <h4 class="modal-title">Send Mail To Selected Email </h4>
-                                    <button type="button" name="send" class="close" data-dismiss="modal">&times;</button>
-                                  </div>
-
-                                  <div class="modal-body">
-                                    <form method="POST" action="/admin/selected/send/mail/contact/" class="unit-ajax-form ">
-                                   {% csrf_token %}
-
-
-                                       <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
-                                        <p><label>Message</label> <textarea  name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
-                                      <button type="submit" class="btn btn-primary mt-30">Send Mail</button>
-                                    </form>
-                                  </div>
-
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
+         
 
          <div class="modal" id="item-unit-modal">
                               <div class="modal-dialog">
@@ -168,7 +137,7 @@
                                     <form method="POST" action="{% url 'admin:send_mail_all_contact' %}" class="unit-ajax-form">
                                    {% csrf_token %}
                                       <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
-                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
                                       <button class="btn btn-primary mt-30">Send Mail</button>
                                     </form>
                                   </div>
@@ -184,24 +153,7 @@
     </section>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-$(document).on('click', '.send-mail-to-selected-btn', function(){
-  var messages = new Array();
-$("input:checked").each(function() {
-    messages.push($(this).val());
-});
 
-console.log(messages);
-});
-
-$.ajax({
-    url:'/admin/selected/send/mail/contact/',
-    data:{
-        name: name,
-        messages: messages,
-    }
-});
-</script>
 
 
 {% endblock %}

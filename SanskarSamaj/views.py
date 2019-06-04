@@ -33,6 +33,7 @@ def index(request):
 def gallery(request):
     galleries = Gallery.objects.filter().order_by('-date')
     banners = Banner.objects.all()
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
     page = request.GET.get('page', 1)
     paginator = Paginator(galleries, 9)
     try:
@@ -45,6 +46,7 @@ def gallery(request):
     context = {
         'galleries': galleries,
         'banners': banners,
+        'latest_event2':latest_event2
 
     }
     return render(request, 'SanskarSamaj/gallery.html', context)
@@ -52,6 +54,7 @@ def gallery(request):
 
 def gallery_detail(request, slug):
     gallerys = Gallery.objects.filter(active=True).order_by('-date')
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
     gallery = Gallery.objects.get(slug=slug)
     gallery.views += 1
     gallery.save(
@@ -66,6 +69,7 @@ def gallery_detail(request, slug):
         'gallerys': gallerys,
         'more_images': more_images,
         'banners': banners,
+        'latest_event2':latest_event2
 
     }
     return render(request, 'SanskarSamaj/gallery_detail.html', context)
@@ -73,6 +77,7 @@ def gallery_detail(request, slug):
 
 def causes_page(request):
     cause = Cause.objects.all().order_by('date')
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
     banners = Banner.objects.all()
     page = request.GET.get('page', 1)
     paginator = Paginator(cause, 6)
@@ -85,7 +90,7 @@ def causes_page(request):
 
     context = {
         'cause': cause,
-
+        'latest_event2':latest_event2,    
         'banners': banners,
 
     }
@@ -94,6 +99,7 @@ def causes_page(request):
 
 def causes_detail(request, slug):
     cause = Cause.objects.get(slug=slug)
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
     cause.views += 1
     cause.save()
     causes = Cause.objects.all()
@@ -101,7 +107,8 @@ def causes_detail(request, slug):
     context = {
         'cause': cause,
         'banners': banners,
-        'causes': causes
+        'causes': causes,
+        'latest_event2':latest_event2
 
     }
     return render(request, 'SanskarSamaj/causes_detail.html', context)
@@ -109,9 +116,11 @@ def causes_detail(request, slug):
 
 def volunteer_page(request):
     banners = Banner.objects.all()
+    latest_event2 = Event.objects.order_by('-pk')[0:2]
     context = {
 
         'banners': banners,
+        'latest_event2':latest_event2,
     }
     return render(request, 'SanskarSamaj/volunteer.html', context)
 

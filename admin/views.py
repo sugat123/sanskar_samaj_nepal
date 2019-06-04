@@ -155,9 +155,11 @@ def dashboard(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')
+    sections = SectionComponent.objects.all()
     events = Event.objects.all().order_by('-date')
     causes = Cause.objects.all().order_by('-date')
-    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes})
+    
+    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes, 'sections':sections})
 
 
 def view_setting(request):
@@ -660,7 +662,7 @@ def delete_selected_message(request):
     messages.success(request,'Deleted')
     return redirect('admin:contact_message')
 def delete_selected_volunteer(request):
-    
+
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')

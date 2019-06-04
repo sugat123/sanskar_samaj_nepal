@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} {% endblock %} </title>
+<title>{% block title %} View Images{% endblock %} </title>
 
 {% block content %}
 
@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Gallery
+        Gallery &nbsp; <span class="badge badge-pill badge-info">{{ gallerys|length }}</span>
       </h1>
       <ol class="breadcrumb">
         

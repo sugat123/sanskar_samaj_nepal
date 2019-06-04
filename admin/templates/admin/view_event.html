@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} {% endblock %} </title>
+<title>{% block title %} View Events{% endblock %} </title>
 
 {% block content %}
 
@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Events
+        Events &nbsp; <span class="badge badge-pill badge-info">{{ events|length }}</span>
       </h1>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Events</a></li>

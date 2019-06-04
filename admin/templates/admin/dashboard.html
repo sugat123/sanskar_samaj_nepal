@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>{% block title %}{{title}}{% endblock %}</title>
+    <title>{% block title %}Home{% endblock %}</title>
 
 	<!-- Bootstrap 4.0-->
 	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap/dist/css/bootstrap.css' %}">
@@ -59,7 +59,9 @@
 		  
 		  <!-- logo-->
 		  <span class="logo-lg">
-			  <img src="" alt="logo" class="light-logo">
+        {% for section in sections %}
+        <img src="/media/{{ section.logo }}" alt="logo" class="light-logo" style="height: 50px;">
+        {% endfor %}
 			  
 		  </span>
 		</a>

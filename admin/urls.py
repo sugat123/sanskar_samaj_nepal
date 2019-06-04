@@ -11,13 +11,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('logout/', views.logout_user, name='logout'),
     path('register/user/', views.register, name='register'),
-
     path('<int:id>/delete/user', views.deleteusers, name='delete_user'),
     path('change/password/', views.users_change_password, name='change_password'),
-
-
-
-
     path('view/admin/', views.view_admin_user, name='view_admin_user'),
     path('view/staff/', views.view_staff_user, name='view_staff_user'),
     path('<int:id>/update/admin/', views.update_admin_user, name='update_admin_user'),
@@ -34,10 +29,8 @@ urlpatterns = [
     path('add/setting/', views.add_setting, name='add_setting'),
     path('add/detail/', views.add_detail, name='add_detail'),
     path('<int:id>/edit/detail/', views.edit_detail, name='edit_detail'),
-
     path('<int:id>/edit/setting', views.edit_setting, name='edit_setting'),
     path('view/setting', views.view_setting, name='view_setting'),
-
     path('add/event', views.add_event, name='add_event'),
     path('add/cause', views.add_cause, name='add_cause'),
     path('add/gallery', views.add_gallery, name='add_gallery'),
@@ -75,7 +68,6 @@ urlpatterns = [
     path('<int:id>/send/mail/volunteer/', views.send_mail_volunteer, name='send_mail_volunteer'),
     path('all/send/mail/contact', views.send_mail_all_contact, name='send_mail_all_contact'),
     path('all/send/mail/volunteer/', views.send_mail_all_volunteer, name='send_mail_all_volunteer'),
-
     path('password-reset/',
          auth_views.PasswordResetView.as_view(template_name='admin/password_reset.html',
                                               email_template_name='admin/password_reset_email.html',

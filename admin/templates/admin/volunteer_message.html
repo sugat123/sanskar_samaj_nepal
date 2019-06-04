@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %}Volunteers {% endblock %} </title>
+<title>{% block title %}Volunteers Messages {% endblock %} </title>
 
 {% block content %}
 
@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Volunteers
+        Volunteers &nbsp; <span class="badge badge-pill badge-info">{{ volunteers|length }}</span>
       </h1>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Volunteers</a></li>
@@ -46,8 +46,8 @@
 					{% for volunteer in volunteers %}
 						<tr>
 							<td><ol type="1">
-                  <input name ="volunteers" type="checkbox" id="volunteer-{{volunteer.id}}" value="{{volunteer.id}}" >
-                  <label for="volunteer-{{volunteer.id}}">{{ forloop.counter }}</label>
+                 
+                  {{ forloop.counter }}
 							</ol>
                             </td>
 
@@ -55,11 +55,11 @@
 							<td>{{ volunteer.email }}</td>
 							<td>{{ volunteer.message }}</td>
 
-                            <td> <a href="{% url 'admin:volunteer_detail' volunteer.id %}" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
+                            <td> <a href="{% url 'admin:volunteer_detail' volunteer.id %}" data-toggle="tooltip"  title="View  Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp;
                              
                               
  <a  data-toggle="modal" data-target="#item-unit-modal2"  title="Send Mail"><i class="ti-email"></i></a>
-                             &nbsp; &nbsp; &nbsp; 
+                             &nbsp; &nbsp;
                              
                               <a href="{% url 'admin:delete_volunteer' volunteer.id %}"  class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{volunteer.id}}"><i class="ti-trash"></i></a> </td>
 
@@ -77,7 +77,7 @@
                                     <form method="POST" action="{% url 'admin:send_mail_volunteer' volunteer.id %}" class="unit-ajax-form">
                                    {% csrf_token %}
                                     <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
-                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" ></textarea></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
                                       <button class="btn btn-primary mt-30"  >Send Mail</button>
                                     </form>
                                   </div>
@@ -95,18 +95,14 @@
 
         {% if volunteers %}
         
-        <button type="submit" class="btn btn-danger mb-5">
-          Delete Selected Messages
-
-       </button>
-
+        
       <a href="{% url 'admin:delete_all_volunteer' %}" class="confirm-delete" title="Delete" data-toggle="modal"
         data-target="#confirmDeleteModal" id="delete_all_messages">
         <button type="button" class="btn btn-danger mb-5">
           Delete All
         </button>
       </a>
-      <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal1">Send Mail To Selected Email</button>
+      
       <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal">Send Mail To All</button>
 
       {% endif %}
@@ -119,6 +115,33 @@
         </div>
         <!-- /.col -->
       </div>
+      
+
+<div class="modal" id="item-unit-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h4 class="modal-title">Send Mail To All </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                <form method="POST" action="{% url 'admin:send_mail_all_contact' %}" class="unit-ajax-form">
+               {% csrf_token %}
+                  <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                     <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
+                  <button class="btn btn-primary mt-30">Send Mail</button>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
       <!-- /.row -->
     </section>
 </div>
