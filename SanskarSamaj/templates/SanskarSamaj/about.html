@@ -2,10 +2,10 @@
 {% load static %}
 {% block page_content %}
 
-{% for abouts in banner %}
-{% if forloop.last %}
-<div class="hero-wrap" style="background-image: url('/media/{{ abouts.about_banner }}');" data-stellar-background-ratio="0.5">
-    {% endif %}
+{% for banner in banners %}
+
+<div class="hero-wrap" style="background-image: url('/media/{{ banner.about_banner }}');" data-stellar-background-ratio="0.5">
+    
     {% endfor %}
     <div class="overlay"></div>
     <div class="container">
@@ -24,16 +24,16 @@
             
           <div class="row d-flex">
               <div class="col-md-6 d-flex ftco-animate">
-                    {% for abouts in about %}
-                    {% if forloop.last %}
+                    {% for section in sections %}
                     
-                  <div class="img img-about align-self-stretch" style="background-image: url('/media/{{ abouts.image }}'); width: 100%;"></div>
+                    
+                  <div class="img img-about align-self-stretch" style="background-image: url('/media/{{ section.about_image }}'); width: 100%;"></div>
               </div>
               <div class="col-md-6 pl-md-5 ftco-animate">
-                  <h2 class="mb-4">{{ abouts.title }}</h2>
-                  <p>{{ abouts.description }}</p>
+                  <h2 class="mb-4">{{ section.about_title }}</h2>
+                  <p>{{ section.about_description }}</p>
               </div>
-              {% endif %}
+              
                 {% endfor %}
           </div>
       </div>
@@ -46,7 +46,7 @@
                 <div class="block-18 color-1 align-items-stretch">
                     <div class="text">
                         <span>Served Over</span>
-                        <strong class="number" data-number="90">0</strong>
+                        <strong class="number" data-number="{{ events|length }}">0</strong>
                         <span>Communities in Nepal</span>
                     </div>
                 </div>
@@ -56,10 +56,10 @@
                 <div class="block-18 color-3 align-items-stretch">
                     <div class="text">
                         <h3 class="mb-4">Be a Volunteer</h3>
-                        {% for volunteers in volunteer %}
-                        {% if forloop.last %}
-                        <p><em>{{ volunteers.text }}</em></p>
-                        {% endif %}
+                        {% for section in sections %}
+                       
+                        <p><em>{{ section.volunteer_text }}</em></p>
+                        
                         {% endfor %}
                         <p><a href="volunteer.html" class="btn btn-white px-3 py-2 mt-2">Be A Volunteer</a></p>
                     </div>

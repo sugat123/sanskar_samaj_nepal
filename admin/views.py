@@ -670,7 +670,19 @@ def delete_volunteer(request,id):
     message.delete()
     messages.success(request, 'Deleted')
     return redirect('admin:volunteer_message')
+<<<<<<< HEAD
+=======
+def delete_selected_message(request):
+    if not request.user.is_superuser:
+        messages.warning(request, 'Permission Denied.You have no permission to register users.')
+        return redirect('admin:index')
+    selected_messages = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    selected_messages.delete()
+    messages.success(request,'Deleted')
+    return redirect('admin:contact_message')
+>>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
 def delete_selected_volunteer(request):
+    
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')

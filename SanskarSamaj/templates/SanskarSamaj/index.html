@@ -1,17 +1,16 @@
 {% extends "SanskarSamaj/base.html" %}
 {% load static %}
 {% block page_content %}
-{% for banners in banner %}
-{% if forloop.last %}
-<div class="hero-wrap" style="background-image: url('/media/{{ banners.index_banner }}');" data-stellar-background-ratio="0.5">
-  {% endif %}
+{% for banner in banners %}
+
+<div class="hero-wrap" style="background-image: url('/media/{{ banner.index_banner }}');" data-stellar-background-ratio="0.5">
+ 
     {% endfor %}
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
             <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                    {{ banners.banner_title }}</h1>
+                
 
 
 
@@ -38,10 +37,10 @@
                 <div class="block-18 color-3 align-items-stretch">
                     <div class="text">
                         <h3 class="mb-4">Be a Volunteer</h3>
-                        {% for volunteers in volunteer %}
-                        {% if forloop.last %}
-                        <p><em>{{ volunteers.text }}</em></p>
-                        {% endif %}
+                        {% for section in sections %}
+                        
+                        <p><em>{{ section.volunteer_text }}</em></p>
+                        
                         {% endfor %}
                         <p><a href="{% url 'volunteer_page'  %}" class="btn btn-white px-3 py-2 mt-2">Be A Volunteer</a></p>
                     </div>
@@ -133,14 +132,14 @@
         <div class="row">
             <div class="col-md-12 ftco-animate">
                 <div class="carousel-cause owl-carousel">
-                    {% for causes in cause %}
+                    {% for cause in causes %}
                     <div class="item">
                         <div class="cause-entry">
-                            <a href="{% url 'causes_detail' causes.slug %}" class="img"
-                                style="background-image: url('/media/{{ causes.cause_image }}');"></a>
+                            <a href="{% url 'causes_detail' cause.slug %}" class="img"
+                                style="background-image: url('/media/{{ cause.cause_image }}');"></a>
                             <div class="text p-3 p-md-4">
-                                <h3><a href="{% url 'causes_detail' causes.slug %}">{{ causes.title }}</a></h3>
-                                <p>{{ causes.description | slice:":200" }}...</p>
+                                <h3><a href="{% url 'causes_detail' cause.slug %}">{{ cause.title }}</a></h3>
+                                <p>{{ cause.description | slice:":200" }}...</p>
 
                             </div>
                         </div>
@@ -200,7 +199,7 @@
        
    
       <div class="d-md-flex">
-        {% for gallerys in gallery %}
+        {% for gallerys in galleries %}
             
         <a href="/media/{{ gallerys.image }}"
           class="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
@@ -235,16 +234,16 @@
             </div>
           </div>
           <div class="row">
-            {% for testimonials in testimonial %} 
+            {% for testimonial in testimonials %} 
             <div class="col-lg-6">
               <div class="staff">
                 <div class="d-flex mb-4">
-                  <div class="img" style="background-image: url('/media/{{ testimonials.image }}');"></div>
+                  <div class="img" style="background-image: url('/media/{{ testimonial.image }}');"></div>
                   <div class="info ml-4">
-                    <h3>{{ testimonials.title }}</h3>
-                    <span class="position">&nbsp;{{ testimonials.position }}</span>
+                    <h3>{{ testimonial.title }}</h3>
+                    <span class="position">&nbsp;{{ testimonial.position }}</span>
                     <div class="text">
-                      <p>{{ testimonials.text }}
+                      <p>{{ testimonial.text }}
                         </p>
                     </div>
                   </div>

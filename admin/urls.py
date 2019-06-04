@@ -60,6 +60,12 @@ path('<int:id>/delete/more/image/',views.delete_more_image,name='delete_more_ima
     path('<slug>/edit/testimonial/', views.edit_testimonial, name='edit_testimonial'),
     path('<int:id>/delete/message/', views.delete_message, name='delete_message'),
     path('<int:id>/delete/volunteer/', views.delete_volunteer, name='delete_volunteer'),
+<<<<<<< HEAD
+=======
+    path('delete/selected/message/', views.delete_selected_message, name='delete_selected_message'),
+    path('delete/selected/cause/', views.delete_selected_cause, name='delete_selected_cause'),
+    path('delete/selected/event/', views.delete_selected_event, name='delete_selected_event'),
+>>>>>>> 201197eebf5f64c880a1622cdcbf986c85590ad5
     path('delete/selected/volunteer/', views.delete_selected_volunteer, name='delete_selected_volunteer'),
      path('delete/selected/testimonial/', views.delete_selected_testimonial, name='delete_selected_testimonial'),
     path('delete/selected/gallery/', views.delete_selected_gallery, name='delete_selected_gallery'),
