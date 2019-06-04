@@ -74,6 +74,7 @@ class Gallery(models.Model):
     image_date = models.DateField(blank=True, null=True)
     image = models.ImageField(upload_to='gallery', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
+    views = models.IntegerField(default=0)
     slug = AutoSlugField(unique_with='id', populate_from='image_title')
     active = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
