@@ -53,6 +53,10 @@ def gallery(request):
 def gallery_detail(request, slug):
     gallerys = Gallery.objects.filter(active=True).order_by('-date')
     gallery = Gallery.objects.get(slug=slug)
+    gallery.views += 1
+    gallery.save(
+
+    )
     banner = Banner.objects.all()
 
     more_images = MoreImage.objects.filter(active=True, image_title_id=gallery)

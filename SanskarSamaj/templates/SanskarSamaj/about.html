@@ -1,0 +1,104 @@
+{% extends "SanskarSamaj/base.html" %}
+{% load static %}
+{% block page_content %}
+
+{% for abouts in banner %}
+{% if forloop.last %}
+<div class="hero-wrap" style="background-image: url('/media/{{ abouts.about_banner }}');" data-stellar-background-ratio="0.5">
+    {% endif %}
+    {% endfor %}
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+        <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+           <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="{% url 'index' %}">Home</a></span> <span>About</span></p>
+          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">About Us</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <section class="ftco-section">
+      <div class="container">
+            
+          <div class="row d-flex">
+              <div class="col-md-6 d-flex ftco-animate">
+                    {% for abouts in about %}
+                    {% if forloop.last %}
+                    
+                  <div class="img img-about align-self-stretch" style="background-image: url('/media/{{ abouts.image }}'); width: 100%;"></div>
+              </div>
+              <div class="col-md-6 pl-md-5 ftco-animate">
+                  <h2 class="mb-4">{{ abouts.title }}</h2>
+                  <p>{{ abouts.description }}</p>
+              </div>
+              {% endif %}
+                {% endfor %}
+          </div>
+      </div>
+  </section>
+
+  <section class="ftco-counter ftco-intro" id="section-counter">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-5 d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 color-1 align-items-stretch">
+                    <div class="text">
+                        <span>Served Over</span>
+                        <strong class="number" data-number="90">0</strong>
+                        <span>Communities in Nepal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 color-3 align-items-stretch">
+                    <div class="text">
+                        <h3 class="mb-4">Be a Volunteer</h3>
+                        {% for volunteers in volunteer %}
+                        {% if forloop.last %}
+                        <p><em>{{ volunteers.text }}</em></p>
+                        {% endif %}
+                        {% endfor %}
+                        <p><a href="volunteer.html" class="btn btn-white px-3 py-2 mt-2">Be A Volunteer</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center">
+          <h2 class="mb-4">Testimonials</h2>
+  
+        </div>
+      </div>
+      <div class="row">
+        {% for testimonials in testimonial %} 
+        <div class="col-lg-6">
+          <div class="staff">
+            <div class="d-flex mb-4">
+              <div class="img" style="background-image: url('/media/{{ testimonials.image }}');"></div>
+              <div class="info ml-4">
+                <h3>{{ testimonials.title }}</h3>
+                <span class="position">&nbsp;{{ testimonials.position }}</span>
+                <div class="text">
+                  <p>{{ testimonials.text }}
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+          
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
