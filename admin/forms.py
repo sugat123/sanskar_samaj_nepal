@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import ImageField
 
 from admin.models import *
 
@@ -56,9 +57,10 @@ class AddGalleryForm(forms.ModelForm):
         fields = '__all__'
 
 class MoreImageForm(forms.ModelForm):
+    # photo = ImageField()
     class Meta:
         model = MoreImage
-        fields = '__all__'
+        exclude = ['image_title']
         
 class SendMailContact(forms.Form):
     subject = forms.CharField(max_length=250)

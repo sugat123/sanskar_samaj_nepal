@@ -459,14 +459,23 @@ def add_more_image(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to register users.')
         return redirect('admin:index')
+    gallery = Gallery.objects.all().order_by('-pk')
     if request.method == 'POST':
         form = MoreImageForm(request.POST or None, request.FILES or None)
         if form.is_valid():
+
             more = form.save(commit=False)
-            more = form.save(commit=False)
+            for field in request.FILES.keys():
+                for formfile in request.FILES.getlist(field):
+                    img = MoreImage(image=formfile)
+                    img.save()
+            for g in gallery:
+                more.image_title_id=g.id
             more.save()
             messages.success(request, ' Images added.')
             return redirect('admin:add_gallery')
+        else:
+            return HttpResponse(form.errors)
     else:
         form = MoreImageForm()
     return render(request, 'admin/more_image.html', {'form': form})

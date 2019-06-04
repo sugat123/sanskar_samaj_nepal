@@ -82,7 +82,7 @@ class Gallery(models.Model):
 
 
 class MoreImage(models.Model):
-    # image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    image_title = models.ForeignKey(Gallery, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='moreimage', default='default.png')
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)

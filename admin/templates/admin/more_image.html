@@ -1,24 +1,78 @@
-<div class="modal" id="item-unit-modal1">
-        <div class="modal-dialog">
-          <div class="modal-content">
 
-            <div class="modal-header">
-              <h4 class="modal-title">Add more images</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+{% load bootstrap4 %}
+<title>{% block title %}{{title}} {% endblock %}</title>
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add More Images
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Gallery</a></li>
+            <li class="breadcrumb-item"><a href="#">Add More Images </a></li>
 
-            <div class="modal-body">
-              <form method="POST" action="{% url 'admin:add_more_image' %}" class="unit-ajax-form" enctype="multipart/form-data">
-             {% csrf_token %}
-             Select images: <input type="file" name="image" multiple>
-                <button class="btn btn-primary mt-30" type="submit">Submit</button>
-              </form>
-            </div>
+        </ol>
+        {% bootstrap_messages %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
+        {% if form.errors %}
+        <div class="alert alert-danger ">
+             {% for field in form %}
+            {{ field.errors }}
+            {% endfor %}
 
-          </div>
         </div>
-      </div>
+        {% endif %}
+        <!-- Basic Forms -->
+        <div class="box box-solid box-primary">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col">
+                      <form method="POST" action="{% url 'admin:add_more_image' %}" class="unit-ajax-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            
+                            
+                            
+                            
+                           
+                            <div class="form-group">
+                                <h5>Select Image to upload</h5>
+                                <div class="controls">
+                                    <input type="file" name="image" class="form-control" multiple>
+                                    
+                                    <div class="help-block"></div>
+                                </div>
+                                
+                            </div>
+
+                            
+
+                            <div class="text-xs-right">
+                                <button type="submit" class="btn btn-info">Add</button>
+                            </div>
+                        
+                        </form>
+                       
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}
