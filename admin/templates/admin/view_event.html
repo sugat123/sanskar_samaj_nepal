@@ -40,8 +40,9 @@
 							<th>Event Title</th>
               <th>Event Date</th>
               <th>Event Time</th>
-							<th>Event Venue</th>
-							<th>Image</th>
+              <th>Event Venue</th>
+              <th>Views</th>
+							
 							
 							<th>Actions</th>
 						</tr>
@@ -61,7 +62,7 @@
               <td>{{ event.time }}</td>
 							<td> {{ event.venue }}</td>
 							
-							<td><img src="/media/{{ event.image }}" alt="image" style="width:120px; height:80px;"></td>
+							<td>{{ event.views }}</td>
                             <td> <a href="{% url 'admin:detail_event' event.slug %}" data-toggle="tooltip"  title="View Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
                              
                               

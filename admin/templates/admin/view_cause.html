@@ -52,7 +52,8 @@
 								
 							</ol></td>
 							<td>{{ cause.title }}</td>
-							<td><img src="/media/{{ cause.cause_image }}" alt="image" style="width:120px; height:120px;"></td>
+              <td><img src="/media/{{ cause.cause_image }}" alt="image" style="width:120px; height:120px;"></td>
+              
                             <td>{{cause.views}}</td>
 							
                             <td> <a href="{% url 'admin:detail_cause' cause.slug %}" data-toggle="tooltip"  title="View Detail"><i class="ti-eye"></i></a> &nbsp; &nbsp; &nbsp;
