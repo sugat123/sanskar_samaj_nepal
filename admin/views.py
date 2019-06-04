@@ -156,7 +156,9 @@ def dashboard(request):
         return redirect('admin:index')
     events = Event.objects.all().order_by('-date')
     causes = Cause.objects.all().order_by('-date')
-    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes})
+    volunteers = VolunteerForm.objects.all()
+    contacts = ContactForm.objects.all()
+    return render(request, 'admin/dashboard.html', {'events':events,'causes':causes,'volunteers':volunteers,'contacts':contacts})
 
 
 def view_setting(request):
