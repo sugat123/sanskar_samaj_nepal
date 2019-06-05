@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html' %}
 {% load static %}
 {% load bootstrap4 %}
-<title>{% block title %} View Images{% endblock %} </title>
+<title>{% block title %} View Albums{% endblock %} </title>
 
 {% block content %}
 
@@ -40,6 +40,7 @@
 							<th>Title</th>
 							<th>Date</th>
                             <th>Views</th>
+                            <th>Featured</th>
                             <th>Image</th>
 							
 							
@@ -57,6 +58,7 @@
 							<td>{{ gallery.image_title }}</td>
 							<td>{{ gallery.image_date }}</td>
                             <td>{{gallery.views}}</td>
+                            <td>{{gallery.featured}}</td>
 							<td><img class="profile-user-img rounded-circle img-fluid mx-auto d-block" src="/media/{{ gallery.image }}" alt="volunteer"
                    style="height: 100px; width: 100px; border-radius: 50%; object-fit: cover;"></td>
 							

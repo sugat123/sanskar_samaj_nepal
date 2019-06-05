@@ -79,7 +79,7 @@ urlpatterns = [
          auth_views.PasswordResetView.as_view(template_name='admin/password_reset.html',
                                               email_template_name='admin/password_reset_email.html',
                                               success_url=reverse_lazy('admin:password_reset_done', ),
-                                              from_email="Sanskar Samaj<yourmailuser01@gmail.com>",
+                                              from_email="Sanskar Samaj <yourmailuser01@gmail.com>",
                                               ),
          name='password_reset'),
 
@@ -95,6 +95,4 @@ urlpatterns = [
     path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='admin/password_reset_complete.html',
 
-                                                      ), name='password_reset_complete')
-
-]
+                                                      ), name='password_reset_complete')]

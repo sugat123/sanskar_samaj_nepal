@@ -3,77 +3,81 @@
 {% load bootstrap4 %}
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/images/favicon.ico">
+     {% for section in sections %}
 
-    <title>{% block title %}Login{% endblock %} </title>
+    <link rel="icon" href="/media/{{section.logo}}">
 
-	<!-- Bootstrap 4.0-->
-	<link rel="stylesheet" href="{% static '/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    {% endfor %}
+    <title>{% block title %}Admin - Login {% endblock %}</title>
 
-	<!-- Bootstrap extend-->
-	<link rel="stylesheet" href="{% static '/css/bootstrap-extend.css' %}">
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="{% static '/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css' %}">
 
-	<!-- Theme style -->
-	<link rel="stylesheet" href="{% static '/css/master_style.css' %}">
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="{% static '/css/bootstrap-extend.css' %}">
 
-	<!-- NeoX Admin skins -->
-	<link rel="stylesheet" href="{% static '/css/skins/_all-skins.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static '/css/master_style.css' %}">
+
+    <!-- NeoX Admin skins -->
+    <link rel="stylesheet" href="{% static '/css/skins/_all-skins.css' %}">
 
 
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 {% for section in sections %}
-<body class="hold-transition bg-img" style="background-image:url('/media/{{ section.login_bg }}')" data-overlay=5>
+
+<body class="hold-transition bg-img"  style="background: url('/media/{{section.login_bg}}'); " data-overlay=5>
+
 {% endfor %}
-	<div class="container pt-3 h-p100">
-	  <div class="row h-p100 justify-content-sm-center align-items-center">
-		<div class="col-sm-6 col-md-4">
+{% block content %}
+<div class="container pt-3 h-p100">
+    <div class="row h-p100 justify-content-sm-center align-items-center">
+        <div class="col-sm-6 col-md-4">
+            {% bootstrap_messages %}
 
-		  <div class="card border-info text-center">
-              {% bootstrap_messages %}
+            <div class="card border-info text-center">
+                <div class="card-body">
+                    <a class="auth-brand text-center d-block mb-20" href="#">
+                        {% for section in sections %}
 
-			<div class="card-body">
-				<a class="auth-brand text-center d-block mb-20" href="#">
-					{% for section in sections %}
-					<img class="brand-img" src="/media/{{ section.logo }}" style="height: 40px;" alt="OnlineZeal"/>
-					{% endfor %}
-				</a>
-			  <h4 class="text-center mb-20">Sanskar Samaj Nepal</h4>
-			  <form action="" method="post" class="form-signin">
-                  {% csrf_token %}
-				<input type="text" class="form-control mb-2" name='username' placeholder="Username" required autofocus>
-			<input type="password" class="form-control mb-2" name='password' placeholder="Password" required>
-				<button class="btn btn-lg btn-primary btn-block mb-20" type="submit">Log in</button>
-<!--				  <div class="checkbox float-left">-->
-<!--					<input type="checkbox"  name="remember_me" id="basic_checkbox_1" >-->
-<!--					<label for="basic_checkbox_1">Remember me</label>-->
-<!--				  </div>-->
-				<center><a href="{% url 'admin:password_reset' %}" >Forgot Password?</a></center>
-			  </form>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
+					<img class="brand-img" src="/media/{{section.logo}}" style="height: 80px;" alt="OnlineZeal"/>
 
+                          {% endfor %}
+				</a><h4 class="text-center mb-20">Admin </h4>
+                    <form method="post" class="form-signin">
+                        {% csrf_token %}
+                      <input type="text" name="username" class="form-control mb-2" placeholder="Username">
+                     <input type="password" name="password" class="form-control mb-2"
+                                        placeholder="Password">
+                        <button class="btn btn-lg btn-primary btn-block mb-20" type="submit">Log in</button>
+                        <center><b><a href="{% url 'admin:password_reset' %}" >Forgot Password ?</a></b>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+        <script src="{% static '/assets/vendor_components/jquery/dist/jquery.min.js' %}"></script>
 
+        <!-- popper -->
+        <script src="{% static '/assets/vendor_components/popper/dist/popper.min.js' %}"></script>
 
-	<!-- jQuery 3 -->
-	<script src="{% static '/assets/vendor_components/jquery/dist/jquery.min.js' %}"></script>
-
-	<!-- popper -->
-	<script src="{% static '/assets/vendor_components/popper/dist/popper.min.js' %}"></script>
-
-	<!-- Bootstrap 4.0-->
-	<script src="{% static '/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <!-- Bootstrap 4.0-->
+        <script src="{% static '/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
 </body>
 </html>

@@ -468,7 +468,7 @@ def add_more_image(request):
             for file in request.FILES.getlist('image'):
                 MoreImage.objects.create(image_title=more.image_title, image=file)
             messages.success(request, 'Images added.')
-            return redirect('admin:view_gallery')
+            return redirect('admin:add_gallery')
         else:
             return HttpResponse(form.errors)
     else:

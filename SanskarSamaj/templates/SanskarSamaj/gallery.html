@@ -56,22 +56,22 @@
     <div class="row mt-5">
       <div class="col text-center">
         <div class="block-27">
-            {% if gallery.has_other_pages %}
+            {% if galleries.has_other_pages %}
             <ul>
-              {% if gallery.has_previous %}
-                <li><a href="?page={{ gallery.previous_page_number }}">&lt;</a></li>
+              {% if galleries.has_previous %}
+                <li><a href="?page={{ galleries.previous_page_number }}">&lt;</a></li>
               {% else %}
                 <li class="disabled"><span>&laquo;</span></li>
               {% endif %}
-              {% for i in gallery.paginator.page_range %}
-                {% if gallery.number == i %}
+              {% for i in galleries.paginator.page_range %}
+                {% if galleries.number == i %}
                   <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                 {% else %}
                   <li><a href="?page={{ i }}">{{ i }}</a></li>
                 {% endif %}
               {% endfor %}
-              {% if gallery.has_next %}
-                <li><a href="?page={{ gallery.next_page_number }}">&raquo;</a></li>
+              {% if galleries.has_next %}
+                <li><a href="?page={{ galleries.next_page_number }}">&raquo;</a></li>
               {% else %}
                 <li class="disabled"><span>&gt;</span></li>
               {% endif %}

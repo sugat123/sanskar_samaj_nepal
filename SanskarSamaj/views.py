@@ -14,7 +14,7 @@ def index(request):
     banners = Banner.objects.all()
     causes = Cause.objects.all()
     testimonials = Testimonial.objects.order_by('-pk')[0:2]
-    galleries = Gallery.objects.order_by('-pk')[0:12]
+    galleries = Gallery.objects.filter(featured=True)[0:12]
     events = Event.objects.all().order_by('date')
     latest_event = Event.objects.order_by('-pk')[0:6]
     latest_event2 = Event.objects.order_by('-pk')[0:2]
