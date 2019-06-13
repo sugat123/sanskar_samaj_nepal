@@ -90,7 +90,8 @@ class EditUserForm(forms.ModelForm):
     
     def clean_email(self):
         email = self.cleaned_data['email']
-        if self.instance and self.instance.pk and not User.objects.filter(email=email).exists():
+        email_exists = User.objects.filter(email=email).exclude(pk=self.instance.pk)
+        if self.instance and self.instance.pk and not email_exists:
             return email
 
         return email
