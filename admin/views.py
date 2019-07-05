@@ -749,6 +749,18 @@ def send_mail_volunteer(request,id):
         messages.success(request, 'Mail Sent.')
         return redirect('admin:volunteer_message')
 
+def send_mail_selected_contact(request):
+    selected_contact = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
+    print(selected_contact)
+    form = SendMailContact(request.POST or None)
+    if form.is_valid():
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        for contact in selected_contact:
+            send_mail(subject, message, ' <settings.EMAIL_HOST_USER>', [contact.email])
+        messages.success(request, 'Mail Sent')
+        return redirect('admin:contact_message')
+
 def send_mail_all_volunteer(request):
     if not request.user.is_superuser:
         messages.warning(request, 'Permission Denied.You have no permission to perform this action.')
@@ -820,14 +832,4 @@ def view400(request):
 def view405(request):
     return render(request, 'admin/404.html', status=405)
 
-def send_mail_selected_contact(request):
-    selected_contact = ContactForm.objects.filter(id__in=request.POST.getlist('messages'))
-    print(selected_contact)
-    form = SendMailContact(request.POST or None)
-    if form.is_valid():
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        for contact in selected_contact:
-            send_mail(subject, message, ' <settings.EMAIL_HOST_USER>', [contact.email])
-        messages.success(request, 'Mail Sent')
-        return redirect('admin:contact_message')
+

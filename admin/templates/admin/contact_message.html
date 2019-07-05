@@ -48,12 +48,10 @@
 					<tbody>
 					{% for contact in contacts %}
 						<tr>
-							<td><ol type="1">
+							<td><input name ="messages" type="checkbox"
+         id="contact-{{contact.id}}" value={{contact.id}}">
 
-                                <input type="checkbox" name="name" id="contact-{{contact.id}}" value="{{contact.id}}">
-                                <label for="contact-{{contact.id}}">{{forloop.counter}}</label>
-
-							</ol>
+          <label for="contact-{{contact.id}}">{{ forloop.counter }}</label>
 
                             </td>
 							<td>{{ contact.name }}</td>
@@ -109,35 +107,11 @@
         Delete All
      </button>
     </a>
-                         <button class="btn btn-primary send-mail-to-selected-btn" type="button"
- data-toggle="modal" data-target="#item-unit-modal1">
+
+ <button class="btn btn-primary send-mail-to-selected-btn" type="button"
+ data-toggle="modal" data-target="#item-selected-modal">
 Send Mail To Selected Email
 </button>
-   <div class="modal" id="item-unit-modal1">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                  <div class="modal-header">
-                                    <h4 class="modal-title">Send Mail To Selected Email </h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  </div>
-
-                                  <div class="modal-body">
-                                    <form method="POST" action="{% url 'admin:send_mail_selected_contact' %}" class="unit-ajax-form">
-                                   {% csrf_token %}
-                                      <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
-                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
-                                      <button class="btn btn-primary mt-30">Send Mail</button>
-                                    </form>
-                                  </div>
-
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
 
                           <button class="btn btn-primary" type="button"  data-toggle="modal" data-target="#item-unit-modal">Send Mail To All</button>
 
@@ -154,7 +128,32 @@ Send Mail To Selected Email
 
 
 
-         
+
+         <div class="modal" id="item-selected-modal">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Send Mail To Selected </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <form method="POST" action="{% url 'admin:send_mail_selected_contact' %}" class="ajax-form">
+                                   {% csrf_token %}
+                                      <p><label>Subject</label> <input type="text" name="subject" class="form-control required" placeholder="Enter subject" ></p>
+                                         <p><label>Message</label> <textarea name="message" class="form-control required" placeholder="Enter message" data-provide="markdown" rows="10"></textarea></p>
+                                      <button class="btn btn-primary mt-30">Send Mail</button>
+                                    </form>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
 
          <div class="modal" id="item-unit-modal">
                               <div class="modal-dialog">
@@ -191,21 +190,21 @@ Send Mail To Selected Email
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-$(document).on('click', '.send-mail-to-selected-btn', function(){
+$(document).on('submit', '.send-mail-to-selected-btn', function(ev){
+ev.preventDefault()
   var messages = new Array();
 $("input:checked").each(function() {
     messages.push($(this).val());
 });
 
-console.log(messages); #here i can see the id of checked email
-});
-
+console.log(messages);
 $.ajax({
-    url:'/admin/selected/send/mail/contact/',
+    url:'/admin/send-mail-selected-contact/',
     data:{
         name: name,
         messages: messages,
     }
+});
 });
 </script>
 {% endblock %}
